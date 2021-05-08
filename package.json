@@ -1,8 +1,12 @@
 {
   "name": "vscode-task-buttons",
-  "displayName": "vscode-task-buttons",
+  "displayName": "Task Buttons",
   "description": "Add your tasks as buttons in the status bar",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spencerwmiles/vscode-task-buttons"
+  },
   "engines": {
     "vscode": "^1.56.0"
   },
@@ -12,6 +16,7 @@
   "activationEvents": [
     "*"
   ],
+  "publisher": "spencerwmiles",
   "contributes": {
     "configuration":[
       {
@@ -22,7 +27,6 @@
             "description": "Define the tasks in which you would like to have buttons added for"
           }
         }
-
       }
     ]
   },

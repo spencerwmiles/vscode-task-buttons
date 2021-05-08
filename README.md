@@ -10,7 +10,7 @@ Run tasks at the click of a button.
 
 This extension contributes the following settings:
 
-* `VsCodeTaskButtons.tasks`: an array for defining your buttons
+* `VsCodeTaskButtons.tasks`: Array
 
 ## Format
 
