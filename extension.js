@@ -1,18 +1,25 @@
-const vscode = require('vscode');
-const VsCodeTaskButton = require('./src/VsCodeTaskButton');
+const vscode = require("vscode");
+const VsCodeTaskButton = require("./src/VsCodeTaskButton");
 
-var vsCodeTaskButton = new VsCodeTaskButton(vscode.workspace.getConfiguration('VsCodeTaskButtons'));
+var vsCodeTaskButton = new VsCodeTaskButton(
+  vscode.workspace.getConfiguration("VsCodeTaskButtons")
+);
 
 function activate(context) {
-    // create a new word counter
-    vsCodeTaskButton.activate();
+  vscode.workspace.onDidChangeConfiguration(() => {
+    vsCodeTaskButton.updateConfiguration(
+      vscode.workspace.getConfiguration("VsCodeTaskButtons")
+    );
+  });
+
+  vsCodeTaskButton.activate();
 }
 
 function deactivate() {
-    vsCodeTaskButton.deactivate();
+  vsCodeTaskButton.deactivate();
 }
 
 module.exports = {
-    activate,
-    deactivate
-}
+  activate,
+  deactivate,
+};
