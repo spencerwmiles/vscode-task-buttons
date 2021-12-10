@@ -1,48 +1,52 @@
-const vscode = require('vscode');
-const TaskButton = require('./TaskButton');
+const vscode = require("vscode");
+const TaskButton = require("./TaskButton");
 
 class VsCodeTaskButton {
+  constructor(config) {
+    this.tasks = config.tasks || [];
 
-	constructor(config) { 
+    this.buttons = [];
+    this.status;
+    this.label = "No tasks";
+  }
 
-		this.tasks = config.tasks || [];
+  activate() {
+    var _this = this;
 
-        this.buttons = [];
-        this.status;
-        this.label = "No tasks";
-	}
-	
-	activate() {
-        var _this = this;
+    this.createStatusBar();
+    this.tasks.forEach(function (task) {
+      var button = new TaskButton(task.label, task.task);
+      button.create();
+      _this.buttons.push(button);
+    });
+  }
 
-        this.createStatusBar();
-        this.tasks.forEach(function(task) {
+  updateConfiguration(config) {
+    this.tasks = config.tasks || [];
+    this.deactivate();
+    this.activate();
+  }
 
-            var button = new TaskButton(task.label, task.task);
-            button.create();
+  deactivate() {
+    this.status.dispose();
+    this.buttons.forEach(function (button) {
+      button.button.dispose();
+    });
+  }
 
-            _this.buttons.push(button);
-        });
-	}
+  createStatusBar() {
+    this.status = vscode.window.createStatusBarItem(
+      vscode.StatusBarAlignment.Left
+    );
 
-    deactivate() {
-        this.status.dispose();
-        this.buttons.forEach(function(button) {
-            button.button.dispose();
-        });
+    if (this.tasks.length) {
+      this.label =
+        this.tasks.length + " " + (this.tasks.length == 1 ? "task" : "tasks");
     }
 
-    createStatusBar() {
-        this.status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-
-        if(this.tasks.length) {
-            this.label = this.tasks.length + " " + (this.tasks.length == 1 ? "task" : "tasks");
-        }
-        
-        this.status.text = this.label;
-        this.status.show();
-    }
-
+    this.status.text = this.label;
+    this.status.show();
+  }
 }
 
 module.exports = VsCodeTaskButton;
