@@ -21,14 +21,18 @@ This extension contributes the following setting:
 
 ## Known Issues
 
-A reload is required for Task Buttons to appear.
+- None at this time
 
 ## Release Notes
 
+### 1.0.2
+
+- Task Buttons will reload on configuration change. Reload was previously required.
+
 ### 1.0.1
 
-Updated documentation
+- Updated documentation
 
 ### 1.0.0
 
-Initial release of VsCodeTask Buttons
+- Initial release of Task Buttons
