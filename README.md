@@ -1,31 +1,33 @@
-# vscode-task-buttons README
+# Task Buttons
 
-Fefine your tasks and you can then execute them at the click of a button.
+Define your tasks and then execute them at the click of a button in your taskbar.
 
-## Features
-
-Run tasks at the click of a button.
+![Usage of Task Buttons](https://media.giphy.com/media/hPnRuIXkv7SE61Gj4C/giphy.gif)
 
 ## Extension Settings
 
-This extension contributes the following settings:
+This extension contributes the following setting:
 
-* `VsCodeTaskButtons.tasks`: Array
+- `VsCodeTaskButtons.tasks`: Array used to define tasks. See below for format.
 
 ## Format
 
+```
 {
-    "label": "Label of button",
-    "task": "name of task to run"
+  "label": "Label that appears in the taskbar",
+  "task": "The vscode task to execute",
 }
+```
 
 ## Known Issues
 
-There are no known issues at this time.
+A reload is required for Task Buttons to appear.
 
 ## Release Notes
 
-Initial Release`
+### 1.0.1
+
+Updated documentation
 
 ### 1.0.0
 
