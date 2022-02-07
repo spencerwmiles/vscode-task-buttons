@@ -2,8 +2,19 @@
 
 All notable changes to the "vscode-task-buttons" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### 1.0.3
 
-## [Unreleased]
+- Task Buttons now include the ability to show a tooltip on hover via an added `tooltip` property.
+- Thanks to @oleksiikutuzov for the suggestion.
 
-- Initial release
+### 1.0.2
+
+- Task Buttons will reload on configuration change. Reload was previously required.
+
+### 1.0.1
+
+- Updated documentation
+
+### 1.0.0
+
+- Initial release of Task Buttons

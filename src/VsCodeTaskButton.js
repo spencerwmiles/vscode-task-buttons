@@ -15,7 +15,7 @@ class VsCodeTaskButton {
 
     this.createStatusBar();
     this.tasks.forEach(function (task) {
-      var button = new TaskButton(task.label, task.task);
+      var button = new TaskButton(task);
       button.create();
       _this.buttons.push(button);
     });

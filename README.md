@@ -16,6 +16,7 @@ This extension contributes the following setting:
 {
   "label": "Label that appears in the taskbar",
   "task": "The vscode task to execute",
+  "tooltip": "Optional tooltip to show when hovering over the button (defaults to task name)",
 }
 ```
 
@@ -24,6 +25,11 @@ This extension contributes the following setting:
 - None at this time
 
 ## Release Notes
+
+### 1.0.3
+
+- Task Buttons now include the ability to show a tooltip on hover via an added `tooltip` property.
+- Thanks to @oleksiikutuzov for the suggestion.
 
 ### 1.0.2
 
@@ -36,3 +42,7 @@ This extension contributes the following setting:
 ### 1.0.0
 
 - Initial release of Task Buttons
+
+```
+
+```
