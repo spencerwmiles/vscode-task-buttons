@@ -15,8 +15,10 @@ This extension contributes the following setting:
 ```
 {
   "label": "Label that appears in the taskbar",
-  "task": "The vscode task to execute",
+  "task": "The vscode task to execute. Must be absent when using 'tasks'",
+  "tasks": "List of tasks to show in the Quick Pick Menu",
   "tooltip": "Optional tooltip to show when hovering over the button (defaults to task name)",
+  "description": "A description of the task when viewing the task list in the Quick Pick Menu"
 }
 ```
 
