@@ -8,6 +8,9 @@ class VsCodeTaskButton {
     this.buttons = [];
     this.status;
     this.label = "No tasks";
+    this.settings = {
+      showCounter: config.showCounter != undefined ? config.showCounter : true //Default true
+    }
   }
 
   activate() {
@@ -46,7 +49,10 @@ class VsCodeTaskButton {
     }
 
     this.status.text = this.label;
-    this.status.show();
+
+    if(this.settings.showCounter) {
+      this.status.show();
+    }
   }
 }
 
