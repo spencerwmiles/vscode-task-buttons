@@ -8,6 +8,7 @@ Define your tasks and then execute them at the click of a button in your taskbar
 
 This extension contributes the following setting:
 
+- `VsCodeTaskButtons.showCounter`: Boolean to show/hide the Task counter. Default true.
 - `VsCodeTaskButtons.tasks`: Array used to define tasks. See below for format.
 
 ## Format
