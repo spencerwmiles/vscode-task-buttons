@@ -24,7 +24,7 @@ class TaskButton {
       this.button.show();
     } else if(this.tasks) {
       this.button.text = this.label || false;
-      this.button.tooltip = this.tooltip || false;
+      this.button.tooltip = this.tooltip || 'Click for more options';
       var quickPickItems = [];
       this.tasks.forEach(task => {
         quickPickItems.push({
@@ -38,9 +38,7 @@ class TaskButton {
       });
 
       var showQuickPickCommand = 'workbench.action.tasks.showQuickPick.' + this.sequence;
-
-      vscode.commands.registerCommand(showQuickPickCommand, async () => 
-      {
+      this.command = vscode.commands.registerCommand(showQuickPickCommand, async () => {
           await vscode.window.showQuickPick(quickPickItems).then(item => {
             if (!item || !item.command || item.command.length === 0) {
               return;
@@ -50,8 +48,18 @@ class TaskButton {
       });
 
       this.button.command = showQuickPickCommand;
+      this.isQuickPick = true;
 
       this.button.show();
+    }
+  }
+
+  dispose() {
+    this.button.dispose();
+
+    //We only make register a command with Quick Pick buttons
+    if(this.isQuickPick) {
+      this.command.dispose();
     }
   }
 }

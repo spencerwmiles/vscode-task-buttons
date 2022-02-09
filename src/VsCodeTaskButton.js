@@ -34,7 +34,7 @@ class VsCodeTaskButton {
   deactivate() {
     this.status.dispose();
     this.buttons.forEach(function (button) {
-      button.button.dispose();
+      button.dispose();
     });
   }
 
