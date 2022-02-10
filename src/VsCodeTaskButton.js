@@ -17,7 +17,8 @@ class VsCodeTaskButton {
     var _this = this;
 
     this.createStatusBar();
-    this.tasks.forEach(function (task) {
+    this.tasks.forEach(function (task, key) {
+      task.sequence = key;
       var button = new TaskButton(task);
       button.create();
       _this.buttons.push(button);
@@ -33,7 +34,7 @@ class VsCodeTaskButton {
   deactivate() {
     this.status.dispose();
     this.buttons.forEach(function (button) {
-      button.button.dispose();
+      button.dispose();
     });
   }
 
