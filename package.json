@@ -22,6 +22,10 @@
       {
         "title": "VsCodeTaskButtons",
         "properties": {
+          "VsCodeTaskButtons.showCounter": {
+            "default": true,
+            "description": "Boolean to show/hide the Task counter. Default true."
+          },
           "VsCodeTaskButtons.tasks": {
             "default": [],
             "description": "Define the tasks in which you would like to have buttons added for"
