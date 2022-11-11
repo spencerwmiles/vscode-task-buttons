@@ -1,0 +1,21 @@
+{
+    "VsCodeTaskButtons.showCounter": false,
+    "VsCodeTaskButtons.tasks": [
+        {
+            "label": "$(notebook-move-down) Build",
+            "task": "build",
+            "tooltip": "🛠️ Start the \"build\" task"
+        },
+        {
+            "label": "$(search-refresh) Re-Build",
+            "task": "re-build",
+            "tooltip": "🧹🛠️ Start the \"re-build\" task"
+        },
+        {
+            "label": "$(notebook-delete-cell) Clean build",
+            "task": "clean",
+            "tooltip": "🧹 Start a \"clean\" task",
+            "foo" : "b;a"
+        }
+    ],
+}
