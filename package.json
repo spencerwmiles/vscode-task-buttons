@@ -23,10 +23,30 @@
         "title": "VsCodeTaskButtons",
         "properties": {
           "VsCodeTaskButtons.showCounter": {
+            "type": "boolean",
             "default": true,
-            "description": "Boolean to show/hide the Task counter. Default true."
+            "description": "Show the task button counter"
           },
           "VsCodeTaskButtons.tasks": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "description": "Label that appears in the taskbar"
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "The vscode task-label to execute"
+                    },
+                    "tooltip": {
+                      "type": "string",
+                      "description": "Optional tooltip to show when hovering over the button (defaults to task name)"
+                    }
+                }
+            },
+            "additionalProperties": false,
             "default": [],
             "description": "Define the tasks in which you would like to have buttons added for"
           }
