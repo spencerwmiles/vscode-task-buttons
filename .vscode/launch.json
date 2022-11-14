@@ -9,7 +9,10 @@
       "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",
-      "args": ["--extensionDevelopmentPath=${workspaceFolder}/build"]
+      "args": [
+          "--extensionDevelopmentPath=${workspaceFolder}/build",
+          "--folder=${workspaceFolder}/test_workspace"
+        ]
     },
     {
       "name": "Extension Tests",
@@ -17,7 +20,7 @@
       "request": "launch",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}/build",
-        "--extensionTestsPath=${workspaceFolder}/build/test/suite/index"
+        "--extensionTestsPath=${workspaceFolder}/build/test/suite/index",
       ]
     }
   ]
