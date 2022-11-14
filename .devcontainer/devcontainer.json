@@ -1,0 +1,24 @@
+{
+	"name": "VsCodeTaskButtons-build",
+	//Use offical Node build container: https://hub.docker.com/_/node
+	"image": "node",
+	"runArgs": [
+		"--name",
+		"VsCodeTaskButtons-Build"
+	],
+	//Install typescript after building container
+	"postCreateCommand": "npm install typescript",
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "bash"
+	},
+	"customizations": {
+		"vscode": {
+			//Define vs code extensions that need to be enabled in/when connected to the container
+			"extensions": [
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/node/app,type=bind,consistency=delegated",
+	"workspaceFolder": "/home/node/app"
+}
