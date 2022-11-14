@@ -6,20 +6,25 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Extension",
+      "name": "Build & Run Extension",
       "type": "extensionHost",
       "request": "launch",
+      "runtimeExecutable": "${execPath}",
       "args": [
-          "--extensionDevelopmentPath=${workspaceFolder}/build",
+          "--extensionDevelopmentPath=${workspaceFolder}",
           "--folder=${workspaceFolder}/test_workspace"
-        ]
+        ],
+      "outFiles": [
+        "${workspaceFolder}/build/**/*.js"
+      ],
+      "preLaunchTask": "npm: vscode:prepublish"
     },
     {
       "name": "Extension Tests",
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/build",
+        "--extensionDevelopmentPath=${workspaceFolder}",
         "--extensionTestsPath=${workspaceFolder}/build/test/suite/index",
       ]
     }
