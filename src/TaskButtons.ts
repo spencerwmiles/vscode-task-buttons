@@ -21,18 +21,24 @@ class TaskButtons {
   showCounter: boolean;
   onDidChangeConfiguration!: vscode.Disposable;
   StatusBarItem!: vscode.StatusBarItem;
+  config!: vscode.WorkspaceConfiguration;
 
-  constructor({ tasks, showCounter }: { tasks: Task[]; showCounter: boolean }) {
-    this.tasks = tasks || [];
-    this.showCounter = showCounter === false ? false : true;
+  constructor() {
+    this.tasks = [];
+    this.showCounter = true;
+
+    //Load configuration
+    this.loadConfig();
+
     this.activate = this.activate.bind(this);
   }
 
   activate() {
+
+    //Register event handle for configuration change
     this.onDidChangeConfiguration = vscode.workspace.onDidChangeConfiguration(
       () => {
-        const config = vscode.workspace.getConfiguration("VsCodeTaskButtons");
-        this.update({ tasks: config.tasks, showCounter: config.showCounter });
+        this.handleConfigChange();
       }
     );
 
@@ -54,7 +60,7 @@ class TaskButtons {
 
       task.StatusBarItem.text = task.label;
 
-      task.StatusBarItem.tooltip = task.tooltip || "";     
+      task.StatusBarItem.tooltip = task.tooltip || "";
 
       if (task.task) {
         task.StatusBarItem.command = {
@@ -121,12 +127,19 @@ class TaskButtons {
     }
   }
 
-  update({ tasks, showCounter }: { tasks: Task[]; showCounter: boolean }) {
+  loadConfig() {
+    //Load configuration from VSCode to our config object
+    this.config = vscode.workspace.getConfiguration("VsCodeTaskButtons");
+
+    this.tasks = this.config.tasks || [];
+    this.showCounter = this.config.showCounter || false;
+  }
+
+  handleConfigChange() {
 
     this.deactivate();
 
-    this.tasks = tasks || [];
-    this.showCounter = showCounter || false;
+    this.loadConfig();
 
     this.activate();
   }
