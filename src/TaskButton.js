@@ -49,7 +49,6 @@ class TaskButton {
 
       this.button.command = showQuickPickCommand;
       this.isQuickPick = true;
-
       this.button.show();
     }
   }
