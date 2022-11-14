@@ -45,7 +45,7 @@ class TaskButtons {
       this.StatusBarItem.show();
     }
 
-    this.tasks.forEach((taskConfig, key) => {
+    this.tasks.forEach((taskConfig, key, baseArray) => {
       const task = { ...taskConfig, sequence: key };
 
       task.StatusBarItem = vscode.window.createStatusBarItem(
@@ -94,7 +94,8 @@ class TaskButtons {
 
       task.StatusBarItem.show();
 
-      taskConfig = task;
+      //Store created object handles back into base array
+      baseArray[key] = task;
     });
   }
 
@@ -119,9 +120,12 @@ class TaskButtons {
   }
 
   update({ tasks, showCounter }: { tasks: Task[]; showCounter: boolean }) {
+
+    this.deactivate();
+
     this.tasks = tasks || [];
     this.showCounter = showCounter || false;
-    this.deactivate();
+
     this.activate();
   }
 }
