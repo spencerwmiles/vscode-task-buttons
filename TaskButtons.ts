@@ -81,7 +81,7 @@ class TaskButtons {
               if (item) {
                 vscode.commands.executeCommand(
                   item.command.command,
-                  item.command.arguments
+                  item.command.arguments[0]
                 );
               }
             });
