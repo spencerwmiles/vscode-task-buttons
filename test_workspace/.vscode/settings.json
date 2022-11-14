@@ -15,7 +15,10 @@
             "label": "$(notebook-delete-cell) Clean build",
             "task": "clean",
             "tooltip": "🧹 Start a \"clean\" task",
-            "foo" : "b;a"
+        },
+        {
+            "label": "$(notebook-delete-cell) Clean (No tooltip)",
+            "task": "clean",
         }
     ],
 }

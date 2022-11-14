@@ -54,6 +54,8 @@ class TaskButtons {
 
       task.StatusBarItem.text = task.label;
 
+      task.StatusBarItem.tooltip = task.tooltip || "";     
+
       if (task.task) {
         task.StatusBarItem.command = {
           title: task.task,
