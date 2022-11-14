@@ -40,6 +40,29 @@
                       "type": "string",
                       "description": "The vscode task-label to execute"
                     },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "label": {
+                                  "type": "string",
+                                  "description": "Label that appears in \"quick pick list\""
+                              },
+                              "task": {
+                                "type": "string",
+                                "description": "The vscode task-label to execute"
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "Description to show next to the task label (optional)"
+                              }
+                          }
+                      },
+                      "additionalProperties": false,
+                      "default": [],
+                      "description": "Tasks listed in a \"quick pick list\" when clicked"
+                    },
                     "tooltip": {
                       "type": "string",
                       "description": "Optional tooltip to show when hovering over the button (defaults to task name)"
@@ -58,6 +81,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
+    "clean": "npm ci", 
     "lint": "eslint ./ --ext .ts,.tsx",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
