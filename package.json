@@ -37,8 +37,22 @@
                         "description": "Label that appears in the taskbar"
                     },
                     "task": {
-                      "type": "string",
+                      "type": ["string", "null"],
                       "description": "The vscode task-label to execute"
+                    },
+                    "tasks": {
+                      "type": ["object", "null"],
+                      "description": "A list of vscode tasks that appear in the quick pick menu",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "description": "Label that appears in the quick pick menu"
+                        },
+                        "description": {
+                          "type": ["string", "null"],
+                          "description": "A description of the task in the quick pick menu"
+                        }
+                      }
                     },
                     "tooltip": {
                       "type": "string",

@@ -36,7 +36,7 @@ Icons are not supported in the tooltip text.
 
 #### Emoji
 
-You can add Emoji's to the button text and tooltip text.
+You can add Emojis to the button text and tooltip text.
 Just type an emoji as you would any normal character opening your "emoji keyboard" ([Windows](https://support.microsoft.com/en-us/windows/windows-keyboard-tips-and-tricks-588e0b72-0fff-6d3f-aeee-6e5116097942) [MacOS](https://support.apple.com/guide/mac-help/use-emoji-and-symbols-on-mac-mchlp1560/mac))
 
 You can also copy them from [Emojipedia](https://emojipedia.org/)
@@ -66,6 +66,19 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
         }
     ],
 }
+{
+            "tasks": [
+                {
+                    "task": "test",
+                    "label": "One"
+                },
+                {
+                    "task": "test2",
+                    "label": "Two"
+                },
+            ],
+            "label": "One"
+        },
 ```
  
 
