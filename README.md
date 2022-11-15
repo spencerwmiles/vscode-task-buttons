@@ -43,7 +43,7 @@ You can also copy them from [Emojipedia](https://emojipedia.org/)
 
 ### Example configuration
 
-The following `settings.json` example gives you four buttons using icons and emojis with one of the buttons opening up two more commands in the quick pick menu.
+The following `settings.json` example gives you four buttons using icons and emojis with one of the buttons opening up two more commands in the quick pick menu. It also has the task counter enabled.
 
 ```
 {
