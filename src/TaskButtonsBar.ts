@@ -32,25 +32,33 @@ class TaskButtonsBar {
         this.handleConfigChange();
       });
 
-    //If enabled, create button that shows number of task buttons
+    //Get task counter config
     const showTasksCounterConfig = vscode.workspace
       .getConfiguration("VsCodeTaskButtons")
       .get("showCounter", true);
-    if (showTasksCounterConfig) {
-      this.taskCountButton = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Left
-      );
-      this.taskCountButton.text =
-        this.activeTaskButtons.length +
-        " " +
-        (this.activeTaskButtons.length == 1 ? "task" : "tasks");
-      this.taskCountButton.show();
-    }
 
     //Get the configured task buttons
     const tasksButtonConfig: unknown[] = vscode.workspace
       .getConfiguration("VsCodeTaskButtons")
       .get("tasks", []);
+
+
+    //If enabled, create button that shows number of task buttons
+    if (showTasksCounterConfig) {
+      this.taskCountButton = vscode.window.createStatusBarItem(
+        vscode.StatusBarAlignment.Left
+      );
+
+      //Update the task count in the task count button
+      this.taskCountButton.text =
+        tasksButtonConfig.length +
+        " " +
+        (tasksButtonConfig.length == 1 ? "task" : "tasks");
+
+      //Show this first, so it gets the most left position
+      this.taskCountButton.show();
+    }
+
 
     //Create a task button for each config
     tasksButtonConfig.forEach((taskButtonConfig: any, index: number) => {
