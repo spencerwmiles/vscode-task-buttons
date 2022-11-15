@@ -79,7 +79,7 @@ The following `settings.json` example gives you four buttons using icons and emo
                 }
             ]
         }
-    ],
+    ]
 }
 ```
  
