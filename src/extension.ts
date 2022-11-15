@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import TaskButtons from "./TaskButtons";
+import TaskButtonsBar from "./TaskButtonsBar";
 
-const Extension = new TaskButtons();
+const Extension = new TaskButtonsBar();
 
 function activate(context: vscode.ExtensionContext) {
   Extension.activate();
