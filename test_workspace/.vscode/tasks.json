@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "re-build",
+			"group": "build",
+			"type": "shell",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"panel": "new",
+			},
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"clean",
+				"build"
+			]
+		},
+		{
+			"label": "build",
+			"type": "shell",
+			"group": "build",
+			"command": "echo build-task",
+		},
+        {
+			"label": "clean",
+			"type": "shell",
+			"group": "build",
+			"command": "echo clean-task",
+		}
+	]
+}

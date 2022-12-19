@@ -3,14 +3,14 @@ const TaskButton = require("./TaskButton");
 
 class VsCodeTaskButton {
   constructor(config) {
-    this.tasks = config.tasks || [];
 
+    //Default state vars
     this.buttons = [];
     this.status;
     this.label = "No tasks";
-    this.settings = {
-      showCounter: config.showCounter != undefined ? config.showCounter : true //Default true
-    }
+
+    //Load config
+    this.loadConfiguration(config);
   }
 
   activate() {
@@ -25,8 +25,17 @@ class VsCodeTaskButton {
     });
   }
 
-  updateConfiguration(config) {
+  loadConfiguration(config) {
     this.tasks = config.tasks || [];
+    this.settings = {
+      showCounter: config.showCounter != undefined ? config.showCounter : true //Default true
+    }
+  }
+
+  updateConfiguration(config) {
+    //Load config from settings
+    this.loadConfiguration(config);
+
     this.deactivate();
     this.activate();
   }
