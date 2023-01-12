@@ -37,7 +37,7 @@
                   "description": "Label that appears in the taskbar"
                 },
                 "task": {
-                  "type": "string",
+                  "type": ["string", "null"],
                   "description": "The vscode task-label to execute"
                 },
                 "alignment": {
@@ -50,27 +50,28 @@
                   "description": "Alignment of the button in the taskbar"
                 },
                 "tasks": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "label": {
-                        "type": "string",
-                        "description": "Label that appears in \"quick pick list\""
-                      },
-                      "task": {
-                        "type": "string",
-                        "description": "The vscode task-label to execute"
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Description to show next to the task label (optional)"
+                  "type": ["array", "null"],
+                    "description": "A list of vscode tasks that appear in the quick pick menu",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "task": {
+                          "type": "string",
+                          "description": "The vscode task-label to execute"
+                        },
+                        "label": {
+                          "type": "string",
+                          "description": "Label that appears in the quick pick menu"
+                        },
+                        "description": {
+                          "type": ["string", "null"],
+                          "description": "A description of the task in the quick pick menu"
+                        }
                       }
                     }
                   },
                   "additionalProperties": false,
                   "default": [],
-                  "description": "Tasks listed in a \"quick pick list\" when clicked"
                 },
                 "tooltip": {
                   "type": "string",
