@@ -45,7 +45,7 @@ You can also copy them from [Emojipedia](https://emojipedia.org/)
 
 ### Example configuration
 
-The following example gives you three buttons (Build, Rebuild and Clean) with icons and emojis. when placed in you projects settings.json
+The following `settings.json` example gives you four buttons using icons and emojis with one of the buttons opening up two more commands in the quick pick menu. It also has the task counter enabled.
 
 ```
 {
@@ -65,8 +65,23 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
             "label": "$(notebook-delete-cell) Clean build",
             "task": "clean",
             "tooltip": "🧹 Start a \"clean\" task"
+        },
+        {
+            "label": "$(server-process) Server"
+            "tasks": [
+                {
+                    "label": "😀 Start Dev Server",
+                    "task": "start-dev",
+                    "description": "$(debug-start) Boots up the development server"
+                },
+                {
+                    "label": "🛑 Stop Dev Server",
+                    "task": "stop-dev",
+                    "description": "$(debug-pause) Shuts down the development server"
+                }
+            ]
         }
-    ],
+    ]
 }
 ```
 
