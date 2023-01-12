@@ -1,2 +1,12 @@
+.vscode/**
+.vscode-test/
+test/**
+build/
+.gitignore
+.yarnrc
+vsc-extension-quickstart.md
+**/jsconfig.json
+**/*.map
+**/.eslintrc.json
 node_modules/*
 build/*

@@ -17,8 +17,10 @@ For each button you define the following object:
 ```
 {
   "label": "Label that appears in the taskbar",
-  "task": "The vscode task to execute",
+  "task": "The vscode task to execute. Must be absent when using 'tasks'",
+  "tasks": "List of tasks to show in the Quick Pick Menu",
   "tooltip": "Optional tooltip to show when hovering over the button (defaults to task name)",
+  "description": "A description of the task when viewing the task list in the Quick Pick Menu"
 }
 ```
 
@@ -72,6 +74,10 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
 - None at this time
 
 ## Release Notes
+
+### 1.0.5
+
+- 
 
 ### 1.0.4
 
