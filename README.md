@@ -12,11 +12,13 @@ This extension contributes the following setting:
 - `VsCodeTaskButtons.tasks`: Array used to define tasks. See below for format.
 
 ### Task button configuration format
+
 For each button you define the following object:
 
 ```
 {
   "label": "Label that appears in the taskbar",
+  "alignment": "The alignment of the button in the taskbar. Options: left and right. Default: left",
   "task": "The vscode task to execute. Must be absent when using 'tasks'",
   "tasks": "List of tasks to show in the Quick Pick Menu",
   "tooltip": "Optional tooltip to show when hovering over the button (defaults to task name)",
@@ -67,7 +69,6 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
     ],
 }
 ```
- 
 
 ## Known Issues
 
@@ -75,9 +76,11 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
 
 ## Release Notes
 
-### 1.0.5
+### 1.1.0
 
-- 
+- Rewrite of the extension ot use TypeScript (shoutout @FaBjE for the help!)
+- Added support for alignment of buttons via "alignment property" (default: left - options: left, right)
+- Added MIT license (Thanks @gameguy682!!!)
 
 ### 1.0.4
 
