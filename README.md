@@ -78,9 +78,9 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
 
 ### 1.1.0
 
-- Rewrite of the extension ot use TypeScript (shoutout @FaBjE for the help!)
+- Rewrite of the extension ot use TypeScript (Shoutout to [Fabje](https://github.com/FaBjE) for the support)
 - Added support for alignment of buttons via "alignment property" (default: left - options: left, right)
-- Added MIT license (Thanks @gameguy682!!!)
+- Added MIT license (Thanks [gameguy682](https://github.com/gameguy682))
 
 ### 1.0.4
 
@@ -103,7 +103,3 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
 ### 1.0.0
 
 - Initial release of Task Buttons
-
-```
-
-```

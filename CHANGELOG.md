@@ -4,9 +4,9 @@ All notable changes to the "vscode-task-buttons" extension will be documented in
 
 ### 1.1.0
 
-- Rewrite of the extension ot use TypeScript
+- Rewrite of the extension ot use TypeScript (Shoutout to [Fabje](https://github.com/FaBjE) for the support)
 - Added support for alignment of buttons via "alignment property" (default: left - options: left, right)
-- Added MIT license (Thanks @gameguy682!!!)
+- Added MIT license (Thanks [gameguy682](https://github.com/gameguy682))
 
 ### 1.0.4
 
