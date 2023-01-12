@@ -96,6 +96,7 @@ The following `settings.json` example gives you four buttons using icons and emo
 - Rewrite of the extension ot use TypeScript (Shoutout to [Fabje](https://github.com/FaBjE) for the support)
 - Added support for alignment of buttons via "alignment property" (default: left - options: left, right)
 - Added MIT license (Thanks [gameguy682](https://github.com/gameguy682))
+- Added Quick Pick Menu
 
 ### 1.0.4
 
