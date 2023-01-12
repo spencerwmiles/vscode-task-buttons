@@ -75,6 +75,10 @@ The following example gives you three buttons (Build, Rebuild and Clean) with ic
 
 ## Release Notes
 
+### 1.0.5
+
+- 
+
 ### 1.0.4
 
 - Fixed issue with task counter not updating (closed issue #12) [PR](https://github.com/spencerwmiles/vscode-task-buttons/pull/14)

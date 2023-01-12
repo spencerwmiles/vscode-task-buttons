@@ -15,6 +15,15 @@
             "label": "$(notebook-delete-cell) Clean build",
             "task": "clean",
             "tooltip": "🧹 Start a \"clean\" task",
+        },
+        {
+            "label": "$(testing-show-as-list-icon) MultiPickList",
+            "tasks": [
+                { "label": "$(notebook-move-down) Build", "task": "build", "description": "🛠️ Start the \"build\" task" }, 
+                { "label": "$(search-refresh) Re-Build", "task": "re-build", "description": "🧹🛠️ Start the \"re-build\" task" }, 
+                { "label": "$(notebook-delete-cell) Clean build", "task": "clean", "description": "🧹 Start a \"clean\" task" }
+            ],
+            "tooltip": "👉 Pick a task",
             "foo" : "b;a"
         }
     ],
