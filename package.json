@@ -49,9 +49,13 @@
                   "default": "left",
                   "description": "Alignment of the button in the taskbar"
                 },
+                "condition": {
+                  "type": ["string", "null"],
+                  "description": "A condition for the task button to be visible"
+                },
                 "tasks": {
                   "type": ["array", "null"],
-                    "description": "A list of vscode tasks that appear in the quick pick menu",
+                    "description": "A list of vscode tasks that appear in the \"quick pick list\"",
                     "items": {
                       "type": "object",
                       "properties": {
@@ -61,12 +65,16 @@
                         },
                         "label": {
                           "type": "string",
-                          "description": "Label that appears in the quick pick menu"
+                          "description": "Label that appears in the \"quick pick list\""
                         },
                         "description": {
                           "type": ["string", "null"],
-                          "description": "A description of the task in the quick pick menu"
-                        }
+                          "description": "Description to show next to the task label"
+                        },
+                        "condition": {
+                          "type": ["string", "null"],
+                          "description": "A condition for the task option to be visible"
+                        },
                       }
                     }
                   },

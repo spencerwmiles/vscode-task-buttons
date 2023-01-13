@@ -9,12 +9,14 @@ type Task = {
   StatusBarItem: vscode.StatusBarItem;
   Command: vscode.Disposable;
   args: string[];
+  condition: string;
 };
 
 type SubTask = {
   task: string;
   label: string;
   description: string;
+  condition: string;
 };
 
 /**
@@ -39,6 +41,7 @@ class TaskButtons {
   onDidChangeConfiguration!: vscode.Disposable;
   CounterStatusBarItem!: vscode.StatusBarItem;
 
+  //TODO: condition
   constructor({ tasks, showCounter }: { tasks: Task[]; showCounter: boolean }) {
     this.tasks = tasks || [];
     this.showCounter = showCounter === false ? false : true;
@@ -49,6 +52,7 @@ class TaskButtons {
   buildCommand(task: Task, index: number) {
     const tasks = task.tasks || [];
     const taskName = task?.label || task.task;
+    const condition = task.condition || null;
 
     if (tasks.length > 0) {
       return {
@@ -59,6 +63,7 @@ class TaskButtons {
           sequence: index,
           label: subTask.label || subTask.task,
           description: subTask.description || "",
+          condition: subTask.condition || null,
           command: {
             title: subTask.task,
             command: COMMANDS.RUN_TASK,
@@ -72,6 +77,7 @@ class TaskButtons {
       title: taskName,
       command: COMMANDS.RUN_TASK,
       arguments: [task.task],
+      condition: condition,
     };
   }
 
