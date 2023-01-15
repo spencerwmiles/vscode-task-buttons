@@ -49,32 +49,55 @@
                   "default": "left",
                   "description": "Alignment of the button in the taskbar"
                 },
-                "condition": {
-                  "type": ["string", "null"],
-                  "description": "A condition for the task button to be visible"
+                "conditions": {
+                  "type": "array",
+                  "additionalProperties": false,
+                  "default": [],
+                  "description": "TODO",
+                  "items": {
+                    "type": ["object", "null"],
+                    "description": "A condition for the task button to be visible",
+                    "additionalProperties": false,
+                    "properties": {
+                      "condition": {
+                        "type": ["string", "number", "boolean"]
+                      },
+                      "operator": {
+                        "type": "string",
+                        "default": "==",
+                        "enum": [
+                          "==",
+                          "===",
+                          "!=",
+                          "!==",
+                          "<",
+                          "<=",
+                          ">",
+                          ">="
+                        ]
+                      },
+                      "value": {
+                        "type": ["string", "number", "boolean"]
+                      }
+                    }
+                  }
                 },
                 "tasks": {
                   "type": ["array", "null"],
-                    "description": "A list of vscode tasks that appear in the \"quick pick list\"",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "task": {
-                          "type": "string",
-                          "description": "The vscode task-label to execute"
-                        },
-                        "label": {
-                          "type": "string",
-                          "description": "Label that appears in the \"quick pick list\""
-                        },
-                        "description": {
-                          "type": ["string", "null"],
-                          "description": "Description to show next to the task label"
-                        },
-                        "condition": {
-                          "type": ["string", "null"],
-                          "description": "A condition for the task option to be visible"
-                        },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "task": {
+                        "type": "string",
+                        "description": "The vscode task-label to execute"
+                      },
+                      "label": {
+                        "type": "string",
+                        "description": "Label that appears in the \"quick pick list\""
+                      },
+                      "description": {
+                        "type": ["string", "null"],
+                        "description": "Description to show next to the task label"
                       }
                     }
                   },
@@ -83,8 +106,8 @@
                   "description": "Tasks listed in a \"quick pick list\" when clicked"
                 },
                 "tooltip": {
-                  "type": "string",
-                  "description": "Optional tooltip to show when hovering over the button (defaults to task name)"
+                  "type": ["string", "null"],
+                  "description": "Tooltip to show when hovering over the button (defaults to task name)"
                 }
               }
             },

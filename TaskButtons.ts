@@ -1,4 +1,11 @@
 import * as vscode from "vscode";
+import IfStatement from "./IfStatement";
+
+type IfEvaluate = {
+  condition: string | number | boolean;
+  value: string | number | boolean;
+  operator: string;
+}
 
 type Task = {
   task: string;
@@ -9,14 +16,13 @@ type Task = {
   StatusBarItem: vscode.StatusBarItem;
   Command: vscode.Disposable;
   args: string[];
-  condition: string;
+  conditions: IfEvaluate[];
 };
 
 type SubTask = {
   task: string;
   label: string;
   description: string;
-  condition: string;
 };
 
 /**
@@ -24,7 +30,7 @@ type SubTask = {
  */
 const COMMANDS = {
   RUN_TASK: "workbench.action.tasks.runTask",
-  SHOW_QUICK_PICK: "workbench.action.tasks.showQuickPick",
+  SHOW_QUICK_PICK: "workbench.action.tasks.showQuickPick"
 };
 
 /**
@@ -52,7 +58,7 @@ class TaskButtons {
   buildCommand(task: Task, index: number) {
     const tasks = task.tasks || [];
     const taskName = task?.label || task.task;
-    const condition = task.condition || null;
+    const conditions = task.conditions || null;
 
     if (tasks.length > 0) {
       return {
@@ -63,7 +69,6 @@ class TaskButtons {
           sequence: index,
           label: subTask.label || subTask.task,
           description: subTask.description || "",
-          condition: subTask.condition || null,
           command: {
             title: subTask.task,
             command: COMMANDS.RUN_TASK,
@@ -77,7 +82,7 @@ class TaskButtons {
       title: taskName,
       command: COMMANDS.RUN_TASK,
       arguments: [task.task],
-      condition: condition,
+      condition: conditions,
     };
   }
 
@@ -119,10 +124,22 @@ class TaskButtons {
       this.CounterStatusBarItem.show();
     }
 
-    this.tasks.forEach((task, key, tasksArray) => {
+    this.tasks.forEach(async (task, key, tasksArray) => {
+      let showTask = true;
+
       task.StatusBarItem = this.createStatusBarItemForTask(task, key);
 
-      if (task?.tasks?.length > 0) {
+      if('conditions' in task) {
+        task.conditions.forEach(async (condition) => {
+          let ifStatement = new IfStatement(condition.condition, condition.value, condition.operator);
+          let isValid = await ifStatement.check();
+          if(showTask && !isValid) {
+            showTask = false;
+          }
+        });
+      }
+
+      if (task?.tasks?.length > 0 && showTask) {
         task.Command = vscode.commands.registerCommand(
           "workbench.action.tasks.showQuickPick." + key,
           async () => {
@@ -137,7 +154,7 @@ class TaskButtons {
         );
       }
 
-      task.StatusBarItem.show();
+      showTask && task.StatusBarItem.show();
       tasksArray[key] = task;
     });
   }
