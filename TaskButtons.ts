@@ -107,7 +107,7 @@ class TaskButtons {
         vscode.StatusBarAlignment.Left
       );
       this.CounterStatusBarItem.text = `${this.tasks.length} task${
-        this.tasks.length > 1 ? "s" : ""
+        this.tasks.length !== 1 ? "s" : ""
       }`;
       this.CounterStatusBarItem.tooltip = "Number of tasks";
       this.CounterStatusBarItem.show();
@@ -160,7 +160,7 @@ class TaskButtons {
     tasks,
     showCounter,
   }:
-    | { tasks: Task[]; showCounter: boolean; showRunningTaskCounter: boolean }
+    | { tasks: Task[]; showCounter: boolean;}
     | vscode.WorkspaceConfiguration) {
     this.deactivate();
 
