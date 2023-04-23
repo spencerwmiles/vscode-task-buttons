@@ -106,7 +106,7 @@
     "mocha": "^10.2.0",
     "typescript": "^5.0.4",
     "@vscode/test-electron": "^2.3.0",
-    "@vscode/vsce": "^2.18.0"
+    "@vscode/vsce": "^2.19.0"
   },
   "dependencies": {}
 }
