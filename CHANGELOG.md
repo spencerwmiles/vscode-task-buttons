@@ -1,6 +1,8 @@
 # Change Log
 
 All notable changes to the "vscode-task-buttons" extension will be documented in this file.
+### 1.1.2
+- Under the hood repo cleanup
 
 ### 1.1.1
 - Updated dependencies

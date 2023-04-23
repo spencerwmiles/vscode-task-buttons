@@ -91,6 +91,9 @@ https://github.com/spencerwmiles/vscode-task-buttons/issues
 
 ## Release Notes
 
+### 1.1.2
+- Under the hood repo cleanup
+
 ### 1.1.1
 - Updated dependencies
 - Fixed bad JSON in package.json
