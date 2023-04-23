@@ -91,6 +91,10 @@ The following `settings.json` example gives you four buttons using icons and emo
 
 ## Release Notes
 
+### 1.1.1
+- Updated dependencies
+- Fixed bad JSON in package.json
+
 ### 1.1.0
 
 - Rewrite of the extension ot use TypeScript (Shoutout to [Fabje](https://github.com/FaBjE) for the support)
