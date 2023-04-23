@@ -15,18 +15,9 @@
           "--folder=${workspaceFolder}/test_workspace"
         ],
       "outFiles": [
-        "${workspaceFolder}/build/**/*.js"
+        "${workspaceFolder}/out/**/*.js"
       ],
       "preLaunchTask": "npm: vscode:prepublish"
     },
-    {
-      "name": "Extension Tests",
-      "type": "extensionHost",
-      "request": "launch",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}",
-        "--extensionTestsPath=${workspaceFolder}/build/test/suite/index",
-      ]
-    }
   ]
 }

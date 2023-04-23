@@ -2,6 +2,8 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=733558
 	// for the documentation about the extensions.json format
 	"recommendations": [
+		"pflannery.vscode-versionlens",
+		"maattdd.gitless",
 		"dbaeumer.vscode-eslint"
 	]
 }

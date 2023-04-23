@@ -6,13 +6,15 @@
 		"--name",
 		"VsCodeTaskButtons-Build"
 	],
-	//Install typescript after building container
-	"postCreateCommand": "npm install typescript",
-	"settings": {
-		"terminal.integrated.defaultProfile.linux": "bash"
-	},
+	"postCreateCommand": [
+		"yarn global add @vscode/vsce", // for creating .vsix for releases
+		"yarn" // install deps for development
+	],
 	"customizations": {
 		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash"
+			},
 			//Define vs code extensions that need to be enabled in/when connected to the container
 			"extensions": [
 				"dbaeumer.vscode-eslint"

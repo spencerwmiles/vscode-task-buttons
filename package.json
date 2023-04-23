@@ -3,10 +3,7 @@
   "displayName": "Task Buttons",
   "description": "Add your tasks as buttons in the status bar",
   "version": "1.1.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/spencerwmiles/vscode-task-buttons"
-  },
+  "repository": "https://github.com/spencerwmiles/vscode-task-buttons",
   "engines": {
     "vscode": "^1.77.0"
   },
@@ -37,7 +34,10 @@
                   "description": "Label that appears in the taskbar"
                 },
                 "task": {
-                  "type": ["string", "null"],
+                  "type": [
+                    "string",
+                    "null"
+                  ],
                   "description": "The vscode task-label to execute"
                 },
                 "alignment": {
@@ -50,7 +50,10 @@
                   "description": "Alignment of the button in the taskbar"
                 },
                 "tasks": {
-                  "type": ["array", "null"],
+                  "type": [
+                    "array",
+                    "null"
+                  ],
                   "items": {
                     "type": "object",
                     "properties": {
@@ -63,7 +66,10 @@
                         "description": "The vscode task-label to execute"
                       },
                       "description": {
-                        "type": ["string", "null"],
+                        "type": [
+                          "string",
+                          "null"
+                        ],
                         "description": "Description to show next to the task label (optional)"
                       }
                     }
@@ -86,27 +92,19 @@
       }
     ]
   },
-  "main": "./build/main.js",
+  "main": "./out/main.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "clean": "npm ci",
-    "lint": "eslint ./ --ext .ts,.tsx",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile",
-    "test": "node ./build/test/runTest.js"
+    "lint": "eslint \"src/**/*.ts\"",
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
     "@types/node": "^18.16.0",
     "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
     "eslint": "^8.39.0",
-    "glob": "^10.2.2",
-    "mocha": "^10.2.0",
-    "typescript": "^5.0.4",
-    "@vscode/test-electron": "^2.3.0",
-    "@vscode/vsce": "^2.19.0"
-  },
-  "dependencies": {}
+    "typescript": "^5.0.4"
+  }
 }
