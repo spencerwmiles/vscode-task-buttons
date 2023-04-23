@@ -85,9 +85,9 @@ The following `settings.json` example gives you four buttons using icons and emo
 }
 ```
 
-## Known Issues
+## Issues / Feature Requests
 
-- None at this time
+https://github.com/spencerwmiles/vscode-task-buttons/issues
 
 ## Release Notes
 
