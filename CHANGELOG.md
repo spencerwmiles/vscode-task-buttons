@@ -2,6 +2,9 @@
 
 All notable changes to the "vscode-task-buttons" extension will be documented in this file.
 
+### 1.1.1
+- Updated dependencies
+
 ### 1.1.0
 
 - Rewrite of the extension ot use TypeScript (Shoutout to [Fabje](https://github.com/FaBjE) for the support)
