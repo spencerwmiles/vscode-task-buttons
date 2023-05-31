@@ -122,9 +122,9 @@ class TaskButtons {
             await vscode.window.showQuickPick(task.tasks).then((subTask) => {
               if (!subTask) return;
 
-              vscode.commands.executeCommand(`${COMMANDS.RUN_TASK}`, [
+              vscode.commands.executeCommand(`${COMMANDS.RUN_TASK}`, 
                 subTask.task,
-              ]);
+              );
             });
           }
         );
