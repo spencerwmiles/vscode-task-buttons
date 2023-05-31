@@ -6,10 +6,7 @@
 		"--name",
 		"VsCodeTaskButtons-Build"
 	],
-	"postCreateCommand": [
-		"yarn global add @vscode/vsce", // for creating .vsix for releases
-		"yarn" // install deps for development
-	],
+	"postCreateCommand": "yarn",
 	"customizations": {
 		"vscode": {
 			"settings": {
