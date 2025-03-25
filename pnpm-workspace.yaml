@@ -1,0 +1,7 @@
+packages:
+  # Include the root package
+  - "."
+  # Exclude test workspace and build directories
+  - "!test_workspace"
+  - "!build"
+  - "!out" 

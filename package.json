@@ -94,11 +94,17 @@
   },
   "main": "./out/main.js",
   "scripts": {
-    "vscode:prepublish": "yarn compile",
+    "vscode:prepublish": "pnpm compile",
     "package": "vsce package",
     "compile": "tsc -p ./",
     "lint": "eslint \"src/**/*.ts\"",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "clean": "rimraf out",
+    "prebuild": "pnpm clean",
+    "build": "pnpm compile",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
