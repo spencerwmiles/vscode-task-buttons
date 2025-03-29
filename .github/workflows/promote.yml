@@ -1,26 +1,28 @@
-name: Create Pre-release
+name: Promote Pre-release to Production
 
 on:
-  push:
-    branches:
-      - production # Trigger on pushes to production branch for pre-releases
+  workflow_dispatch:
+    inputs:
+      prerelease_tag:
+        description: 'Pre-release tag to promote (e.g., v1.1.4-alpha.1)'
+        required: true
+        type: string
 
 permissions:
   contents: write # Allow creating releases, commits, tags
-  issues: write # Allow commenting on issues/PRs (optional, for semantic-release plugins)
+  issues: write # Allow commenting on issues/PRs (optional)
   pull-requests: write # Allow commenting on issues/PRs (optional)
-  id-token: write # Needed for OIDC if used for publishing (though PAT seems used here)
 
 jobs:
-  release:
-    name: Prepare and Publish Pre-release
+  promote:
+    name: Promote and Publish Production Release
     runs-on: ubuntu-latest
-    # Prevent workflow run on the commit made by semantic-release
-    if: ${{ !contains(github.event.head_commit.message, 'chore(release):') }}
+
     steps:
-      - name: Checkout code
+      - name: Checkout specific tag
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.inputs.prerelease_tag }}
           fetch-depth: 0 # Required for semantic-release commit analysis
           persist-credentials: false # Allow semantic-release to use GITHUB_TOKEN for push
 
@@ -32,7 +34,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8 # Match previous version
+          version: 8
           run_install: false
 
       - name: Get pnpm store directory
@@ -50,28 +52,26 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile # Use frozen lockfile in CI
+        run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
+      # Optional: Run build/test again on the specific tag if desired
+      # - name: Build
+      #   run: pnpm build
+      # - name: Test
+      #   run: pnpm test
 
-      - name: Build
-        run: pnpm build
-
-      - name: Test
-        run: pnpm test
-
-      - name: Semantic Release (Create Pre-release)
+      - name: Semantic Release (Finalize Production)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm semantic-release # Creates pre-release tag & GitHub pre-release
+        # Running semantic-release here should finalize the version based on the pre-release tag
+        # It updates changelog/package.json, commits, creates final tag, updates GitHub release
+        run: pnpm semantic-release
 
       - name: Package Extension
-        run: pnpm package # Uses the pre-release version in package.json
+        run: pnpm package # Uses the finalized version in package.json
 
-      - name: Publish Pre-release to Visual Studio Marketplace
+      - name: Publish to Visual Studio Marketplace
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VSCE_PAT }}
           registryUrl: https://marketplace.visualstudio.com
-          preRelease: true # Mark this as a pre-release on the marketplace
