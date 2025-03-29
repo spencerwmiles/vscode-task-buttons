@@ -1,3 +1,13 @@
+## [1.2.3-rc.2](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.3-rc.1...v1.2.3-rc.2) (2025-03-29)
+
+### Bug Fixes
+
+- workaround for non semver versioning for extension marketplace ([ab54c1c](https://github.com/spencerwmiles/vscode-task-buttons/commit/ab54c1c9a6ee984cbbbf3ed12068217c12a28eb0))
+
+### Code Refactoring
+
+- streamline release workflows ([d67187d](https://github.com/spencerwmiles/vscode-task-buttons/commit/d67187d805c2d52d92d28ff73ab708dc10a64ea2))
+
 ## [1.2.3-rc.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.2...v1.2.3-rc.1) (2025-03-29)
 
 ### Housekeeping
