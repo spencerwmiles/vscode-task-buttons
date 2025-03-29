@@ -76,7 +76,14 @@ const mockWorkspace = {
     update: vi.fn(),
     inspect: vi.fn(),
   })),
-  onDidChangeConfiguration: vi.fn(() => mockDisposable), // Returns a disposable
+  // Update to accept a listener and return a disposable
+  onDidChangeConfiguration: vi.fn(
+    (_listener: (e: { affectsConfiguration: (section: string) => boolean }) => void) => {
+      // In a real test setup, you might store and invoke the listener
+      // For now, just return the standard mock disposable
+      return mockDisposable;
+    }
+  ),
 };
 
 // Mock implementation for commands API
@@ -113,6 +120,85 @@ export const StatusBarAlignment = {
   Right: 2,
 };
 
+// Mock Uri class with more properties to match vscode.Uri
+export class Uri {
+  scheme: string;
+  authority: string;
+  path: string;
+  query: string;
+  fragment: string;
+
+  constructor(scheme: string, authority: string, path: string, query: string, fragment: string) {
+    this.scheme = scheme;
+    this.authority = authority;
+    this.path = path;
+    this.query = query;
+    this.fragment = fragment;
+  }
+
+  static parse(value: string): Uri {
+    // Very basic parser, assumes file URI or simple path
+    if (value.startsWith('file://')) {
+      const path = value.substring(7);
+      // Crude split, doesn't handle complex authorities, queries, fragments
+      return new Uri('file', '', path, '', '');
+    }
+    // Assume it's just a path for simplicity in mock
+    return new Uri('file', '', value, '', '');
+  }
+
+  get fsPath(): string {
+    // Basic conversion, might need refinement for different OS/formats
+    return this.scheme === 'file' ? this.path : `/non/file/path/${this.path}`;
+  }
+
+  toString(_skipEncoding?: boolean): string {
+    // Prefix unused parameter
+    // Simple mock toString
+    return `${this.scheme}://${this.authority}${this.path}${this.query ? `?${this.query}` : ''}${this.fragment ? `#${this.fragment}` : ''}`;
+  }
+
+  // Add other methods like with, toJSON if needed by tests
+  with(change: {
+    scheme?: string;
+    authority?: string;
+    path?: string;
+    query?: string;
+    fragment?: string;
+  }): Uri {
+    return new Uri(
+      change.scheme ?? this.scheme,
+      change.authority ?? this.authority,
+      change.path ?? this.path,
+      change.query ?? this.query,
+      change.fragment ?? this.fragment
+    );
+  }
+
+  // Define a type for the JSON representation
+  toJSON(): { $mid: number; scheme: string; path: string; fsPath: string; external: string } {
+    return {
+      $mid: 1, // Mock value
+      scheme: this.scheme,
+      path: this.path,
+      fsPath: this.fsPath,
+      external: this.toString(),
+    };
+  }
+}
+
+// Mock Enums needed by ExtensionContext
+export const ExtensionMode = {
+  Production: 1,
+  Development: 2,
+  Test: 3,
+};
+
+export const ExtensionKind = {
+  UI: 1,
+  Workspace: 2,
+};
+
 // Export the mocked APIs
 export const window = mockWindow;
 export const workspace = mockWorkspace;
@@ -121,11 +207,66 @@ export const Disposable = {
   from: vi.fn(() => mockDisposable), // Mock static Disposable.from if needed
 };
 
-// Export other types/interfaces if needed by tests
-export interface ExtensionContext {
-  subscriptions: { push: (disposable: { dispose: () => void }) => void }[];
-  // Add other context properties if needed
+// --- Basic Mock Types/Interfaces ---
+// These are needed to satisfy the 'as unknown as vscode.Type' casts in main.test.ts
+// They don't need full implementations unless the tests actually use their methods.
+
+export interface EnvironmentVariableCollection {
+  persistent: boolean;
+  replace(variable: string, value: string): void;
+  append(variable: string, value: string): void;
+  prepend(variable: string, value: string): void;
+  get(variable: string): string | undefined;
+  forEach(
+    callback: (
+      variable: string,
+      mutator: unknown, // Use unknown instead of any
+      collection: EnvironmentVariableCollection
+    ) => unknown, // Use unknown instead of any
+    thisArg?: unknown // Use unknown instead of any
+  ): void;
+  delete(variable: string): void;
+  clear(): void;
+  // Add the missing method based on the error in main.test.ts
+  getScoped(scope: unknown): unknown; // Use unknown instead of any
 }
+
+export interface SecretStorage {
+  get(key: string): Promise<string | undefined>;
+  store(key: string, value: string): Promise<void>;
+  delete(key: string): Promise<void>;
+  onDidChange: unknown; // Use unknown instead of any
+}
+
+export interface Memento {
+  keys(): readonly string[];
+  get<T>(key: string): T | undefined;
+  get<T>(key: string, defaultValue: T): T;
+  update(key: string, value: unknown): Promise<void>; // Use unknown instead of any
+  // Add the missing method based on the error in main.test.ts
+  setKeysForSync(keys: readonly string[]): void; // Make non-optional for globalState
+}
+
+export interface Extension<T> {
+  readonly id: string;
+  readonly extensionUri: Uri;
+  readonly extensionPath: string;
+  readonly isActive: boolean;
+  readonly packageJSON: unknown; // Use unknown instead of any
+  readonly extensionKind: (typeof ExtensionKind)[keyof typeof ExtensionKind];
+  readonly exports: T;
+  activate(): Promise<T>;
+}
+
+// --- End Basic Mock Types/Interfaces ---
+
+// Export other types/interfaces if needed by tests
+// Keep the original simple ExtensionContext for basic structure if preferred,
+// but the main.test.ts uses the ActualVscode.ExtensionContext type now.
+// export interface ExtensionContext {
+//   subscriptions: { push: (disposable: { dispose: () => void }) => void }[];
+//   // Add other context properties if needed
+// }
 
 // Helper to reset mocks between tests
 export const resetMocks = vi.fn(() => {

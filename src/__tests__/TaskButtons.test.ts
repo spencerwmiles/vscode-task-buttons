@@ -1,8 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as vscodeMock from './vscode.js'; // Import our mock with .js extension
 
-// Tell Vitest to use our mock implementation for the 'vscode' module
-vi.mock('vscode', () => vscodeMock);
+// No need for vi.mock('vscode', ...) here, as it's handled by the alias in vitest.config.ts
 
 import TaskButtons, { type Task } from '../TaskButtons.js'; // Import with .js extension
 
