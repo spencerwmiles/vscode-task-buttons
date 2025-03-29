@@ -2,24 +2,27 @@ name: Release Extension
 
 on:
   push:
-    tags:
-      - 'v*'
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release (e.g., 1.2.3)'
-        required: true
-        type: string
+    branches:
+      - production # Trigger on pushes to production branch
+
+permissions:
+  contents: write # Allow creating releases, commits, tags
+  issues: write # Allow commenting on issues/PRs (optional, for semantic-release plugins)
+  pull-requests: write # Allow commenting on issues/PRs (optional)
+  id-token: write # Needed for OIDC if used for publishing (though PAT seems used here)
 
 jobs:
   release:
     name: Prepare and Publish Release
     runs-on: ubuntu-latest
+    # Prevent workflow run on the commit made by semantic-release
+    if: ${{ !contains(github.event.head_commit.message, 'chore(release):') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Required for semantic-release commit analysis
+          persist-credentials: false # Allow semantic-release to use GITHUB_TOKEN for push
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,24 +32,25 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 8 # Match previous version
           run_install: false
 
       - name: Get pnpm store directory
+        id: pnpm-cache
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
         uses: actions/cache@v3
         with:
-          path: ${{ env.STORE_PATH }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile # Use frozen lockfile in CI
 
       - name: Lint
         run: pnpm lint
@@ -57,52 +61,24 @@ jobs:
       - name: Test
         run: pnpm test
 
-      - name: Determine version
-        id: version
-        run: |
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
-            # Extract version from tag (remove 'v' prefix)
-            VERSION=${GITHUB_REF#refs/tags/v}
-          else
-            # Use input version from manual trigger
-            VERSION=${{ github.event.inputs.version }}
-          fi
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      # Removed manual version/notes steps
 
-      - name: Update version in package.json
-        run: |
-          # Use jq to update version in package.json
-          jq '.version = "${{ env.VERSION }}"' package.json > package.json.tmp
-          mv package.json.tmp package.json
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # VSCE_PAT: ${{ secrets.VSCE_PAT }} # Pass PAT if needed by a semantic-release plugin (not currently used for this)
+        run: pnpm semantic-release # This will analyze commits, bump version, update changelog, commit, tag, create GitHub release
 
-      - name: Generate Release Notes
-        id: release_notes
-        run: |
-          # Extract changelog entry for this version
-          RELEASE_NOTES=$(awk '/### ${{ env.VERSION }}/,/###|$/{print}' CHANGELOG.md | sed '1d;/^$/d;/^###/,$d')
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          echo "$RELEASE_NOTES" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
+      # These steps run *after* semantic-release has completed and potentially created a new tag/release.
+      # They use the version updated in package.json by semantic-release.
       - name: Package Extension
-        run: pnpm package
+        run: pnpm package # Uses the updated version in package.json
 
       - name: Publish to Visual Studio Marketplace
+        # This action likely reads the version from the updated package.json
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VSCE_PAT }}
           registryUrl: https://marketplace.visualstudio.com
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ env.VERSION }}
-          name: Version ${{ env.VERSION }}
-          body: ${{ env.RELEASE_NOTES }}
-          draft: false
-          prerelease: false
-          files: |
-            *.vsix
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Removed manual GitHub Release step (handled by semantic-release)
