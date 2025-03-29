@@ -22,6 +22,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Required for semantic-release commit analysis
+          # Ensure we check out the version committed by semantic-release if it ran
+          ref: main
           persist-credentials: false # Allow semantic-release to use GITHUB_TOKEN for push
 
       - name: Setup Node.js
@@ -44,40 +46,65 @@ jobs:
       - name: Test
         run: pnpm test
 
-      # Run semantic-release only after checks pass
-      # This will:
-      # - Analyze commits since last release on 'main'
-      # - Determine next 'rc' version (e.g., 1.2.1-rc.1)
-      # - Update package.json and CHANGELOG.md
-      # - Commit and push changes back to 'main' (due to @semantic-release/git)
-      # - Create GitHub pre-release and tag
+      # Run semantic-release: Updates package.json/changelog, commits, creates tag/release
       - name: Semantic Release (Create RC Pre-release)
+        id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm semantic-release
 
-      - name: Get RC Pre-release Version
-        id: get_version
-        # Read version directly from the potentially updated package.json
+      # Get the full pre-release version (e.g., 1.2.3-rc.1) from the updated package.json
+      - name: Get Full Pre-release Version
+        id: get_full_version
+        # Check if semantic-release actually created a new release/tag
+        # If it did, package.json was updated and committed. Checkout again to get it.
+        # If not (no relevant commits), semantic.outputs.new_release_published will be false/empty
+        # Note: semantic-release action doesn't easily output the version. Reading package.json is reliable.
+        # We need to checkout again *if* semantic-release made changes.
+        if: steps.semantic.outputs.new_release_published == 'true' # Adjust based on actual semantic-release output if available
+        uses: actions/checkout@v4
+        with:
+          ref: main # Checkout the commit semantic-release just made
+          persist-credentials: false
+      - name: Read Full Version from package.json
+        id: read_full_version
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      # Package the extension using the version determined by semantic-release
+      # Calculate the base version (e.g., 1.2.3) by stripping the suffix
+      - name: Calculate Base Version
+        id: get_base_version
+        run: |
+          full_version="${{ steps.read_full_version.outputs.version }}"
+          base_version="${full_version%%-*}" # Remove shortest suffix starting with '-'
+          echo "base_version=$base_version" >> $GITHUB_OUTPUT
+          echo "Calculated base version: $base_version from $full_version"
+
+      # Update package.json in the runner FS to the base version for packaging/publishing
+      # Use --no-git-tag-version to prevent git operations
+      - name: Set package.json to Base Version (for Marketplace)
+        run: pnpm version ${{ steps.get_base_version.outputs.base_version }} --no-git-tag-version
+        # Verify the change (optional)
+      - name: Verify package.json version
+        run: node -p "require('./package.json').version"
+
+      # Package the extension using the base version in package.json
       - name: Package Extension
         run: pnpm package
 
       # Upload the VSIX asset to the GitHub release created by semantic-release
+      # Use the FULL version for the tag name, as that's what semantic-release created
       - name: Upload VSIX to GitHub Release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.get_version.outputs.version }} # Assumes tag is v<version>
+          tag_name: v${{ steps.read_full_version.outputs.version }} # Use the actual tag created
           files: |
             *.vsix
           fail_on_unmatched_files: true
           prerelease: true # Ensure it targets the pre-release
 
-      # Publish to marketplace last
+      # Publish to marketplace last, using the base version but marking as pre-release
       - name: Publish RC Pre-release to Visual Studio Marketplace
         uses: HaaLeo/publish-vscode-extension@v1
         with:
