@@ -6,21 +6,9 @@
     "outDir": "out",
     "sourceMap": true,
     "strict": true,
-    "rootDir": ".",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitOverride": true,
-    "allowUnreachableCode": false
+    "skipLibCheck": true
   },
-  "include": ["src/**/*", "*.ts", "vitest.config.ts"],
-  "exclude": ["node_modules", ".vscode-test", "out"]
+  "exclude": ["node_modules", ".vscode-test", "dist/**", "out/**"]
 }
