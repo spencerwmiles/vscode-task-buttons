@@ -1,9 +1,9 @@
-name: Create RC Pre-release
+name: Create Full Release
 
 on:
   push:
     branches:
-      - main # Trigger on pushes to main branch for RC pre-releases
+      - production # Trigger on pushes to production branch for full releases
 
 permissions:
   contents: write # Allow creating releases, commits, tags
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release:
-    name: Prepare and Publish RC Pre-release
+    name: Prepare and Publish Full Release
     runs-on: ubuntu-latest
     # Prevent workflow run on the commit made by semantic-release
     if: ${{ !contains(github.event.head_commit.message, 'chore(release):') }}
@@ -46,17 +46,17 @@ jobs:
 
       # Run semantic-release only after checks pass
       # This will:
-      # - Analyze commits since last release on 'main'
-      # - Determine next 'rc' version (e.g., 1.2.1-rc.1)
+      # - Analyze commits since last release on 'production'
+      # - Determine next full version (e.g., 1.3.0)
       # - Update package.json and CHANGELOG.md
-      # - Commit and push changes back to 'main' (due to @semantic-release/git)
-      # - Create GitHub pre-release and tag
-      - name: Semantic Release (Create RC Pre-release)
+      # - Commit and push changes back to 'production' (due to @semantic-release/git)
+      # - Create GitHub release and tag
+      - name: Semantic Release (Create Full Release)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm semantic-release
 
-      - name: Get RC Pre-release Version
+      - name: Get Full Release Version
         id: get_version
         # Read version directly from the potentially updated package.json
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
@@ -75,12 +75,12 @@ jobs:
           files: |
             *.vsix
           fail_on_unmatched_files: true
-          prerelease: true # Ensure it targets the pre-release
+          prerelease: false # Ensure it targets the full release
 
       # Publish to marketplace last
-      - name: Publish RC Pre-release to Visual Studio Marketplace
+      - name: Publish Full Release to Visual Studio Marketplace
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VSCE_PAT }}
           registryUrl: https://marketplace.visualstudio.com
-          preRelease: true # Mark this as a pre-release on the marketplace
+          preRelease: false # Mark this as a full release on the marketplace

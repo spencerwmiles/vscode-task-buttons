@@ -3,7 +3,6 @@
   "displayName": "Task Buttons",
   "description": "Add your tasks as buttons in the status bar",
   "version": "1.2.0",
-  "type": "module",
   "repository": "https://github.com/spencerwmiles/vscode-task-buttons",
   "engines": {
     "vscode": "^1.98.0"
