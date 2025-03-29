@@ -11,13 +11,11 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": [
-          "--extensionDevelopmentPath=${workspaceFolder}",
-          "--folder=${workspaceFolder}/test_workspace"
-        ],
-      "outFiles": [
-        "${workspaceFolder}/out/**/*.js"
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--folder=${workspaceFolder}/test_workspace"
       ],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "preLaunchTask": "npm: vscode:prepublish"
-    },
+    }
   ]
 }

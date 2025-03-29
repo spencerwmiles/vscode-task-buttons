@@ -1,0 +1,66 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "files.eol": "\n",
+  "VsCodeTaskButtons.showCounter": true,
+  "VsCodeTaskButtons.tasks": [
+    {
+      "task": "build",
+      "icon": "check",
+      "color": "#4CAF50"
+    },
+    {
+      "task": "test",
+      "icon": "check",
+      "color": "#4CAF50"
+    },
+    {
+      "task": "lint",
+      "icon": "check",
+      "color": "#4CAF50"
+    },
+    {
+      "task": "echo \"test\"",
+      "icon": "terminal",
+      "color": "#808080"
+    },
+    {
+      "task": "echo \"initial\"",
+      "icon": "terminal",
+      "color": "#808080"
+    },
+    {
+      "task": "echo \"updated\"",
+      "icon": "terminal",
+      "color": "#808080"
+    },
+    {
+      "task": "echo \"second\"",
+      "icon": "terminal",
+      "color": "#808080"
+    },
+    {
+      "task": "write-test-file",
+      "icon": "file",
+      "color": "#2196F3"
+    },
+    {
+      "task": "write-file-1",
+      "icon": "file",
+      "color": "#2196F3"
+    },
+    {
+      "task": "write-file-2",
+      "icon": "file",
+      "color": "#2196F3"
+    }
+  ]
+}

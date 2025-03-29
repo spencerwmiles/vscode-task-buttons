@@ -1,0 +1,77 @@
+name: Create Pre-release
+
+on:
+  push:
+    branches:
+      - production # Trigger on pushes to production branch for pre-releases
+
+permissions:
+  contents: write # Allow creating releases, commits, tags
+  issues: write # Allow commenting on issues/PRs (optional, for semantic-release plugins)
+  pull-requests: write # Allow commenting on issues/PRs (optional)
+  id-token: write # Needed for OIDC if used for publishing (though PAT seems used here)
+
+jobs:
+  release:
+    name: Prepare and Publish Pre-release
+    runs-on: ubuntu-latest
+    # Prevent workflow run on the commit made by semantic-release
+    if: ${{ !contains(github.event.head_commit.message, 'chore(release):') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for semantic-release commit analysis
+          persist-credentials: false # Allow semantic-release to use GITHUB_TOKEN for push
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8 # Match previous version
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile # Use frozen lockfile in CI
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Semantic Release (Create Pre-release)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm semantic-release # Creates pre-release tag & GitHub pre-release
+
+      - name: Package Extension
+        run: pnpm package # Uses the pre-release version in package.json
+
+      - name: Publish Pre-release to Visual Studio Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.VSCE_PAT }}
+          registryUrl: https://marketplace.visualstudio.com
+          preRelease: true # Mark this as a pre-release on the marketplace

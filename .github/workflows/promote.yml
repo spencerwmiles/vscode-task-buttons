@@ -1,0 +1,77 @@
+name: Promote Pre-release to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      prerelease_tag:
+        description: 'Pre-release tag to promote (e.g., v1.1.4-alpha.1)'
+        required: true
+        type: string
+
+permissions:
+  contents: write # Allow creating releases, commits, tags
+  issues: write # Allow commenting on issues/PRs (optional)
+  pull-requests: write # Allow commenting on issues/PRs (optional)
+
+jobs:
+  promote:
+    name: Promote and Publish Production Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout specific tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.prerelease_tag }}
+          fetch-depth: 0 # Required for semantic-release commit analysis
+          persist-credentials: false # Allow semantic-release to use GITHUB_TOKEN for push
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Optional: Run build/test again on the specific tag if desired
+      # - name: Build
+      #   run: pnpm build
+      # - name: Test
+      #   run: pnpm test
+
+      - name: Semantic Release (Finalize Production)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Running semantic-release here should finalize the version based on the pre-release tag
+        # It updates changelog/package.json, commits, creates final tag, updates GitHub release
+        run: pnpm semantic-release
+
+      - name: Package Extension
+        run: pnpm package # Uses the finalized version in package.json
+
+      - name: Publish to Visual Studio Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.VSCE_PAT }}
+          registryUrl: https://marketplace.visualstudio.com

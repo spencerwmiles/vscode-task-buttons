@@ -1,21 +1,57 @@
-# Task Buttons
+# VSCode Task Buttons
 
-Define your tasks and then execute them at the click of a button in your taskbar.
+[![CI](https://github.com/spencerwmiles/vscode-task-buttons/actions/workflows/ci.yml/badge.svg)](https://github.com/spencerwmiles/vscode-task-buttons/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/spencerwmiles.vscode-task-buttons)](https://marketplace.visualstudio.com/items?itemName=spencerwmiles.vscode-task-buttons)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/spencerwmiles.vscode-task-buttons)](https://marketplace.visualstudio.com/items?itemName=spencerwmiles.vscode-task-buttons)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/spencerwmiles.vscode-task-buttons)](https://marketplace.visualstudio.com/items?itemName=spencerwmiles.vscode-task-buttons&ssr=false#review-details)
+
+Execute VSCode tasks with a single click directly from your status bar.
 
 ![Usage of Task Buttons](https://media.giphy.com/media/hPnRuIXkv7SE61Gj4C/giphy.gif)
 
-## Extension Settings
+## Features
 
-This extension contributes the following setting:
+- 🚀 Add task buttons to your VSCode status bar
+- 📋 Create quick pick menus for grouped tasks
+- 🎨 Customize button appearance with icons and emojis
+- 🔄 Dynamic task counter
+- ⚙️ Flexible configuration options
+
+## Installation
+
+### From VSCode Marketplace
+
+1. Open VSCode
+2. Go to Extensions view (Ctrl+Shift+X / Cmd+Shift+X)
+3. Search for "Task Buttons"
+4. Click "Install"
+
+### From Command Line
+
+```bash
+code --install-extension spencerwmiles.vscode-task-buttons
+```
+
+## Getting Started
+
+1. **Define your tasks** in your VSCode `tasks.json` file
+2. **Configure Task Buttons** in your VSCode `settings.json` file (see [Configuration](#configuration))
+3. **Click the buttons** in your status bar to execute tasks
+
+## Configuration
+
+### Extension Settings
+
+This extension contributes the following settings:
 
 - `VsCodeTaskButtons.showCounter`: Boolean to show/hide the Task counter. Default true.
-- `VsCodeTaskButtons.tasks`: Array used to define tasks. See below for format.
+- `VsCodeTaskButtons.tasks`: Array used to define tasks (see format below).
 
-### Task button configuration format
+### Task Button Configuration Format
 
 For each button you define the following object:
 
-```
+```json
 {
   "label": "Label that appears in the taskbar",
   "alignment": "The alignment of the button in the taskbar. Options: left and right. Default: left",
@@ -26,13 +62,15 @@ For each button you define the following object:
 }
 ```
 
+### Customizing Button Appearance
+
 #### Icons
 
 You can add icons to your buttons using the following syntax in the text field:
 
-    $(icon-name)
+`$(icon-name)`
 
-A list of all available icon names (sourced from the VSCode theme) is [here](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing)
+A list of all available icon names is [here](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing).
 
 Icons are not supported in the tooltip text.
 
@@ -43,103 +81,140 @@ Just type an emoji as you would any normal character opening your "emoji keyboar
 
 You can also copy them from [Emojipedia](https://emojipedia.org/)
 
-### Example configuration
+## Example Configurations
 
-The following `settings.json` example gives you four buttons using icons and emojis with one of the buttons opening up two more commands in the quick pick menu. It also has the task counter enabled.
+### Basic Configuration
 
-```
+```json
 {
-    "VsCodeTaskButtons.showCounter": true,
-    "VsCodeTaskButtons.tasks": [
-        {
-            "label": "$(notebook-move-down) Build",
-            "task": "build",
-            "tooltip": "🛠️ Start the \"build\" task"
-        },
-        {
-            "label": "$(search-refresh) Re-Build",
-            "task": "re-build",
-            "tooltip": "🧹🛠️ Start the \"re-build\" task"
-        },
-        {
-            "label": "$(notebook-delete-cell) Clean build",
-            "task": "clean",
-            "tooltip": "🧹 Start a \"clean\" task"
-        },
-        {
-            "label": "$(server-process) Server"
-            "tasks": [
-                {
-                    "label": "😀 Start Dev Server",
-                    "task": "start-dev",
-                    "description": "$(debug-start) Boots up the development server"
-                },
-                {
-                    "label": "🛑 Stop Dev Server",
-                    "task": "stop-dev",
-                    "description": "$(debug-pause) Shuts down the development server"
-                }
-            ]
-        }
-    ]
+  "VsCodeTaskButtons.showCounter": true,
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "$(play) Run",
+      "task": "run",
+      "tooltip": "Start the application"
+    },
+    {
+      "label": "$(beaker) Test",
+      "task": "test",
+      "tooltip": "Run tests"
+    }
+  ]
 }
 ```
 
-## Issues / Feature Requests
+### Advanced Configuration with Quick Pick Menu
 
-https://github.com/spencerwmiles/vscode-task-buttons/issues
+```json
+{
+  "VsCodeTaskButtons.showCounter": true,
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "$(notebook-move-down) Build",
+      "task": "build",
+      "tooltip": "🛠️ Start the \"build\" task"
+    },
+    {
+      "label": "$(search-refresh) Re-Build",
+      "task": "re-build",
+      "tooltip": "🧹🛠️ Start the \"re-build\" task"
+    },
+    {
+      "label": "$(notebook-delete-cell) Clean build",
+      "task": "clean",
+      "tooltip": "🧹 Start a \"clean\" task"
+    },
+    {
+      "label": "$(server-process) Server",
+      "tasks": [
+        {
+          "label": "😀 Start Dev Server",
+          "task": "start-dev",
+          "description": "$(debug-start) Boots up the development server"
+        },
+        {
+          "label": "🛑 Stop Dev Server",
+          "task": "stop-dev",
+          "description": "$(debug-pause) Shuts down the development server"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Mixed Alignment Configuration
+
+```json
+{
+  "VsCodeTaskButtons.showCounter": true,
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "$(play) Run",
+      "task": "run",
+      "alignment": "left",
+      "tooltip": "Start the application"
+    },
+    {
+      "label": "$(stop) Stop",
+      "task": "stop",
+      "alignment": "right",
+      "tooltip": "Stop the application"
+    }
+  ]
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### Task buttons not appearing
+
+- Ensure your tasks are correctly defined in `tasks.json`
+- Check for errors in your Task Buttons configuration
+- Try reloading VSCode (Command Palette > Developer: Reload Window)
+
+#### Tasks not executing
+
+- Verify task names match exactly between `tasks.json` and Task Buttons configuration
+- Check the Output panel (View > Output) for any errors
+- Try running the task directly from the Tasks menu to verify it works
+
+#### Button appearance issues
+
+- Ensure icon names are correct and prefixed with `$(`
+- Restart VSCode after making configuration changes
+- Check that your VSCode version supports the icons you're using
+
+### Reporting Issues
+
+If you encounter any issues:
+
+1. Check the [existing issues](https://github.com/spencerwmiles/vscode-task-buttons/issues) to see if it's already reported
+2. If not, [create a new issue](https://github.com/spencerwmiles/vscode-task-buttons/issues/new) with:
+   - A clear description of the problem
+   - Steps to reproduce
+   - Expected vs. actual behavior
+   - VSCode version and extension version
+   - Screenshots if applicable
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started.
 
 ## Release Notes
 
-### 1.1.3
-* Bump @typescript-eslint/eslint-plugin from 5.59.0 to 5.59.1 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/45
-* Bump @typescript-eslint/parser from 5.59.0 to 5.59.1 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/47
-* Bump @types/node from 18.16.0 to 18.16.3 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/46
-* Bump @typescript-eslint/parser from 5.59.1 to 5.59.2 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/52
-* Bump eslint from 8.39.0 to 8.40.0 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/48
-* Bump @typescript-eslint/eslint-plugin from 5.59.1 to 5.59.5 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/54
-* Bump @typescript-eslint/parser from 5.59.2 to 5.59.5 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/56
-* Bump eslint from 8.40.0 to 8.41.0 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/58
-* Bump @typescript-eslint/parser from 5.59.5 to 5.59.8 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/67
-* Bump @typescript-eslint/eslint-plugin from 5.59.5 to 5.59.8 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/68
-* Bump @types/vscode from 1.77.0 to 1.78.1 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/64
-* Bump @types/node from 18.16.3 to 20.2.5 by @dependabot in https://github.com/spencerwmiles/vscode-task-buttons/pull/62
-* Corrected how tasks were being passed through to the executeCommand call for subtasks by @spencerwmiles in https://github.com/spencerwmiles/vscode-task-buttons/pull/66
+For full release notes, see [CHANGELOG.md](CHANGELOG.md).
 
-**Full Changelog**: https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.1.2...v.1.1.3
+### Latest Release
 
-### 1.1.2
-- Under the hood repo cleanup
+#### 1.1.3
 
-### 1.1.1
-- Updated dependencies
-- Fixed bad JSON in package.json
+- Corrected how tasks were being passed through to the executeCommand call for subtasks
+- Multiple dependency updates
+- See full [CHANGELOG.md](CHANGELOG.md) for details
 
-### 1.1.0
+## License
 
-- Rewrite of the extension ot use TypeScript (Shoutout to [Fabje](https://github.com/FaBjE) for the support)
-- Added support for alignment of buttons via "alignment property" (default: left - options: left, right)
-- Added MIT license (Thanks [gameguy682](https://github.com/gameguy682))
-- Added Quick Pick Menu
-
-### 1.0.4
-
-- Fixed issue with task counter not updating (closed issue #12) [PR](https://github.com/spencerwmiles/vscode-task-buttons/pull/14)
-- Shoutout to [Fabje](https://github.com/FaBjE) for the PR
-
-### 1.0.3
-
-- Task Buttons now include the ability to show a tooltip on hover via an added `tooltip` property.
-- Thanks to @oleksiikutuzov for the suggestion.
-
-### 1.0.2
-
-- Task Buttons will reload on configuration change. Reload was previously required.
-
-### 1.0.1
-
-- Updated documentation
-
-### 1.0.0
-
-- Initial release of Task Buttons
+This extension is licensed under the [MIT License](LICENSE.md).
