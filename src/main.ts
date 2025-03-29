@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import TaskButtons, { CONFIGURATION_SECTION } from './TaskButtons';
+import TaskButtons, { CONFIGURATION_SECTION } from './TaskButtons.js';
 
 let extension: TaskButtons | undefined;
 
