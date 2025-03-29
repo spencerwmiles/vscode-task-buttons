@@ -61,6 +61,7 @@ jobs:
       - name: Test
         run: pnpm test
 
+      # Run semantic-release only after checks pass
       - name: Semantic Release (Create Pre-release)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -70,6 +71,23 @@ jobs:
         id: get_version
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
+      # Package the extension using the version determined by semantic-release
+      - name: Package Extension
+        run: pnpm package
+
+      # Upload the VSIX asset to the GitHub release created by semantic-release
+      - name: Upload VSIX to GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }} # Assumes tag is v<version>
+          files: |
+            *.vsix
+          fail_on_unmatched_files: true
+          prerelease: true # Ensure it targets the pre-release
+
+      # Create the PR for package.json/CHANGELOG.md updates *after* packaging/upload
       - name: Create Pull Request for Version Update
         uses: peter-evans/create-pull-request@v6
         with:
@@ -93,9 +111,7 @@ jobs:
             package.json
             CHANGELOG.md
 
-      - name: Package Extension
-        run: pnpm package # Uses the pre-release version in package.json
-
+      # Publish to marketplace last
       - name: Publish Pre-release to Visual Studio Marketplace
         uses: HaaLeo/publish-vscode-extension@v1
         with:
