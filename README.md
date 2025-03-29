@@ -207,14 +207,6 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on
 
 For full release notes, see [CHANGELOG.md](CHANGELOG.md).
 
-### Latest Release
-
-#### 1.1.3
-
-- Corrected how tasks were being passed through to the executeCommand call for subtasks
-- Multiple dependency updates
-- See full [CHANGELOG.md](CHANGELOG.md) for details
-
 ## License
 
 This extension is licensed under the [MIT License](LICENSE.md).
