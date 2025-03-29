@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - dev
-      - main
+      - staging
   pull_request:
     branches:
       - dev
-      - main
+      - staging
 
 permissions:
   contents: read # Read permissions are sufficient for checkout
