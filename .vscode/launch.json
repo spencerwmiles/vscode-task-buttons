@@ -6,7 +6,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Build & Run Extension",
+      "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
@@ -15,7 +15,55 @@
         "--folder=${workspaceFolder}/test_workspace"
       ],
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
-      "preLaunchTask": "npm: vscode:prepublish"
+      "preLaunchTask": "pnpm: compile",
+      "sourceMaps": true
+    },
+    {
+      "name": "Run Extension (Watch)",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--folder=${workspaceFolder}/test_workspace"
+      ],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "preLaunchTask": "pnpm: watch",
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": false,
+        "group": "Extension",
+        "order": 2
+      }
+    },
+    {
+      "name": "Extension Tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
+      ],
+      "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
+      "preLaunchTask": "pnpm: test:watch",
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": false,
+        "group": "Tests",
+        "order": 1
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Extension + Tests",
+      "configurations": ["Run Extension", "Extension Tests"],
+      "presentation": {
+        "hidden": false,
+        "group": "Extension",
+        "order": 3
+      }
     }
   ]
 }

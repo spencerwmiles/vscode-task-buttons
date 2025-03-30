@@ -14,6 +14,10 @@
     "onStartupFinished"
   ],
   "publisher": "spencerwmiles",
+  "main": "./out/main.js",
+  "extension": {
+    "entryPoint": "./out/main.js"
+  },
   "contributes": {
     "configuration": [
       {
@@ -39,6 +43,16 @@
                     "null"
                   ],
                   "description": "The vscode task-label to execute"
+                },
+                "color": {
+                  "type": "string",
+                  "enum": [
+                    "default",
+                    "error",
+                    "warning"
+                  ],
+                  "default": "default",
+                  "description": "Color of the task button. Only 'error' (red) and 'warning' (yellow) are supported by VSCode."
                 },
                 "alignment": {
                   "type": "string",
@@ -92,7 +106,6 @@
       }
     ]
   },
-  "main": "./out/main.js",
   "scripts": {
     "vscode:prepublish": "pnpm compile",
     "package": "vsce package",
