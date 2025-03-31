@@ -9,4 +9,9 @@ updates:
     directory: '/' # Location of package manifests
     target-branch: 'dev'
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
+    groups:
+      dev-deps:
+        dependency-type: 'development'
+      prod-deps:
+        dependency-type: 'production'
