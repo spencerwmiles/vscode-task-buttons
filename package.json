@@ -94,7 +94,10 @@
   },
   "main": "./out/main.js",
   "files": [
-    "out",
+    "out/main.js",
+    "out/main.js.map",
+    "out/TaskButtons.js",
+    "out/TaskButtons.js.map",
     "README.md",
     "license.txt"
   ],
@@ -102,7 +105,7 @@
     "vscode:prepublish": "pnpm compile",
     "package": "vsce package",
     "compile": "tsc -p ./",
-    "lint": "eslint \"src/**/*.ts\"",
+    "lint": "eslint .",
     "watch": "tsc -watch -p ./",
     "clean": "rimraf out",
     "prebuild": "pnpm clean",
@@ -149,7 +152,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
+      "lint --fix",
       "prettier --write"
     ],
     "*.{json,md}": [
