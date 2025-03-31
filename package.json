@@ -113,7 +113,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:e2e": "pnpm compile && node ./out/e2e/runTest.js",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write .",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "commit": "cz"
@@ -139,7 +139,6 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.4",
     "glob": "^11.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
@@ -152,7 +151,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "lint --fix",
+      "eslint --fix",
       "prettier --write"
     ],
     "*.{json,md}": [
