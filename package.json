@@ -93,6 +93,11 @@
     ]
   },
   "main": "./out/main.js",
+  "files": [
+    "out",
+    "README.md",
+    "license.txt"
+  ],
   "scripts": {
     "vscode:prepublish": "pnpm compile",
     "package": "vsce package",
