@@ -14,6 +14,18 @@
     "onStartupFinished"
   ],
   "publisher": "spencerwmiles",
+  "files": [
+    "out/main.js",
+    "out/main.js.map",
+    "out/TaskButtons.js",
+    "out/TaskButtons.js.map",
+    "README.md",
+    "license.txt"
+  ],
+  "main": "./out/main.js",
+  "extension": {
+    "entryPoint": "./out/main.js"
+  },
   "contributes": {
     "configuration": [
       {
@@ -39,6 +51,16 @@
                     "null"
                   ],
                   "description": "The vscode task-label to execute"
+                },
+                "color": {
+                  "type": "string",
+                  "enum": [
+                    "default",
+                    "error",
+                    "warning"
+                  ],
+                  "default": "default",
+                  "description": "Color of the task button. Only 'error' (red) and 'warning' (yellow) are supported by VSCode."
                 },
                 "alignment": {
                   "type": "string",
@@ -92,12 +114,11 @@
       }
     ]
   },
-  "main": "./out/main.js",
   "scripts": {
     "vscode:prepublish": "pnpm compile",
     "package": "vsce package",
     "compile": "tsc -p ./",
-    "lint": "eslint \"src/**/*.ts\"",
+    "lint": "eslint .",
     "watch": "tsc -watch -p ./",
     "clean": "rimraf out",
     "prebuild": "pnpm clean",
@@ -105,7 +126,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:e2e": "pnpm compile && node ./out/e2e/runTest.js",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write .",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "commit": "cz"
@@ -131,7 +152,6 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.4",
     "glob": "^11.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
