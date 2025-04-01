@@ -1,3 +1,25 @@
+## [1.3.0-rc.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.3-rc.3...v1.3.0-rc.1) (2025-04-01)
+
+### Features
+
+- Added color customization options for task buttons (default, error, warning) in TaskButtons.ts. ([f1a5ccf](https://github.com/spencerwmiles/vscode-task-buttons/commit/f1a5ccfc0bfc61c8f4e44e77486028f61e19e9a5))
+
+### Bug Fixes
+
+- updated dependabot to use dev for target branch ([8198b22](https://github.com/spencerwmiles/vscode-task-buttons/commit/8198b2200dcb9990c1020a8445587d1c9b71b354))
+
+### Code Refactoring
+
+- removed tests from tsconfig exclude and just solved for file inclusion via whitelist in package.json (kiss amirite) ([bb5e035](https://github.com/spencerwmiles/vscode-task-buttons/commit/bb5e035ed67589040cddda0496b0f62d376c0042))
+
+### Housekeeping
+
+- **release:** Updates for pre-release 1.2.3-rc.3 ([b7437fe](https://github.com/spencerwmiles/vscode-task-buttons/commit/b7437fe803d7d8197e4ac4fd31717c2e67520abf))
+- update dependabot configuration to daily checks and group dependencies by type ([4e383d4](https://github.com/spencerwmiles/vscode-task-buttons/commit/4e383d40604257ff8bff504f19496f88a5816b5f))
+- update eslint configuration and package.json to remove prettier plugin and adjust format command ([c3b865e](https://github.com/spencerwmiles/vscode-task-buttons/commit/c3b865e3bd6c11197fe606736d40b49fda95c013))
+- update package.json to specify files and modify tsconfig.json exclusions ([7033a45](https://github.com/spencerwmiles/vscode-task-buttons/commit/7033a45778ea4144255168c8a353171b596838ce))
+- updated branch name references to staging instead of main ([d37ec04](https://github.com/spencerwmiles/vscode-task-buttons/commit/d37ec04a8555ed788174704f20dd465e6afbbd7a))
+
 ## [1.2.3-rc.3](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.3-rc.2...v1.2.3-rc.3) (2025-03-29)
 
 ### Housekeeping
