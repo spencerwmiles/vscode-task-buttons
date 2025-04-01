@@ -94,13 +94,13 @@ describe('TaskButtons', () => {
       });
 
       // Instantiate TaskButtons - this calls update -> _refreshUI internally
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
       // Verify state after constructor initialization
       // createStatusBarItem is called once by constructor/update.
       // Since we disabled the counter, it should be called once for the task button.
       expect(vscodeMock.window.createStatusBarItem).toHaveBeenCalledTimes(1); // Only the task button
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       // We can't directly check the internal _statusBarItem easily with the current mock setup
       // Instead, we rely on createStatusBarItem being called the correct number of times.
@@ -116,9 +116,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       const task = activeTasks[0];
       expect(task.statusBarItemText).toBe('Build Project');
@@ -134,12 +134,67 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       const task = activeTasks[0];
       expect(task.statusBarItemAlignment).toBe(vscodeMock.StatusBarAlignment.Right);
+    });
+
+    it('should apply error color to task button when specified', () => {
+      const taskConfig: Task[] = [{ task: 'build', color: 'error' }];
+      vi.mocked(mockConfig.get).mockImplementation((key: string) => {
+        if (key === 'tasks') return taskConfig;
+        if (key === 'showCounter') return false;
+        return undefined;
+      });
+
+      const _taskButtons = new TaskButtons(mockConfig);
+      const createdItems = vscodeMock.window.getCreatedStatusBarItems();
+      expect(createdItems).toHaveLength(1);
+
+      const item = createdItems[0];
+      expect(item.backgroundColor).toEqual(
+        new vscodeMock.ThemeColor('statusBarItem.errorBackground')
+      );
+      expect(item.color).toEqual(new vscodeMock.ThemeColor('statusBarItem.errorForeground'));
+    });
+
+    it('should apply warning color to task button when specified', () => {
+      const taskConfig: Task[] = [{ task: 'build', color: 'warning' }];
+      vi.mocked(mockConfig.get).mockImplementation((key: string) => {
+        if (key === 'tasks') return taskConfig;
+        if (key === 'showCounter') return false;
+        return undefined;
+      });
+
+      const _taskButtons = new TaskButtons(mockConfig);
+      const createdItems = vscodeMock.window.getCreatedStatusBarItems();
+      expect(createdItems).toHaveLength(1);
+
+      const item = createdItems[0];
+      expect(item.backgroundColor).toEqual(
+        new vscodeMock.ThemeColor('statusBarItem.warningBackground')
+      );
+      expect(item.color).toEqual(new vscodeMock.ThemeColor('statusBarItem.warningForeground'));
+    });
+
+    it('should use default colors when color is not specified', () => {
+      const taskConfig: Task[] = [{ task: 'build' }];
+      vi.mocked(mockConfig.get).mockImplementation((key: string) => {
+        if (key === 'tasks') return taskConfig;
+        if (key === 'showCounter') return false;
+        return undefined;
+      });
+
+      const _taskButtons = new TaskButtons(mockConfig);
+      const createdItems = vscodeMock.window.getCreatedStatusBarItems();
+      expect(createdItems).toHaveLength(1);
+
+      const item = createdItems[0];
+      expect(item.backgroundColor).toBeUndefined();
+      expect(item.color).toBeUndefined();
     });
   });
 
@@ -160,11 +215,11 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
       // Verify state after constructor initialization
       expect(vscodeMock.window.createStatusBarItem).toHaveBeenCalledTimes(1); // Only the multi-task button
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       // We can't directly check the internal _statusBarItem easily with the current mock setup
     });
@@ -185,9 +240,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       const task = activeTasks[0];
       expect(task.commandId).toMatch(/^VsCodeTaskButtons\.showQuickPick\.\d+$/); // Check for unique command ID
@@ -215,9 +270,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       const task = activeTasks[0];
       expect(task.statusBarItemText).toBe('Multi Task');
@@ -242,9 +297,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       const task = activeTasks[0];
       expect(task.statusBarItemAlignment).toBe(vscodeMock.StatusBarAlignment.Right);
@@ -267,9 +322,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const activeTasks = taskButtons.getActiveTasksForTest();
+      const activeTasks = _taskButtons.getActiveTasksForTest();
       expect(activeTasks).toHaveLength(1);
       const task = activeTasks[0];
 
@@ -295,9 +350,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const counterStatus = taskButtons.getCounterStatusForTest();
+      const counterStatus = _taskButtons.getCounterStatusForTest();
       expect(counterStatus).toBeDefined();
       expect(counterStatus?.text).toBe('2 tasks');
     });
@@ -310,8 +365,8 @@ describe('TaskButtons', () => {
         if (key === 'showCounter') return true;
         return undefined;
       });
-      let taskButtons = new TaskButtons(mockConfig);
-      let counterStatus = taskButtons.getCounterStatusForTest();
+      let _taskButtons = new TaskButtons(mockConfig);
+      let counterStatus = _taskButtons.getCounterStatusForTest();
       expect(counterStatus?.text).toBe('1 task');
 
       // Test with 0 tasks
@@ -321,8 +376,8 @@ describe('TaskButtons', () => {
         if (key === 'showCounter') return true;
         return undefined;
       });
-      taskButtons = new TaskButtons(mockConfig); // Re-initialize with new config
-      counterStatus = taskButtons.getCounterStatusForTest();
+      _taskButtons = new TaskButtons(mockConfig); // Re-initialize with new config
+      counterStatus = _taskButtons.getCounterStatusForTest();
       expect(counterStatus?.text).toBe('0 tasks');
 
       // Test with multiple tasks (already covered by previous test, but good to be explicit)
@@ -332,8 +387,8 @@ describe('TaskButtons', () => {
         if (key === 'showCounter') return true;
         return undefined;
       });
-      taskButtons = new TaskButtons(mockConfig); // Re-initialize with new config
-      counterStatus = taskButtons.getCounterStatusForTest();
+      _taskButtons = new TaskButtons(mockConfig); // Re-initialize with new config
+      counterStatus = _taskButtons.getCounterStatusForTest();
       expect(counterStatus?.text).toBe('2 tasks');
     });
 
@@ -345,9 +400,9 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
 
-      const counterStatus = taskButtons.getCounterStatusForTest();
+      const counterStatus = _taskButtons.getCounterStatusForTest();
       expect(counterStatus).toBeUndefined();
       // Also check that createStatusBarItem was only called for the task button
       expect(vscodeMock.window.createStatusBarItem).toHaveBeenCalledTimes(1);
@@ -363,12 +418,12 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
       // Get the actual mock objects created
       const createdItems = vscodeMock.window.getCreatedStatusBarItems();
       expect(createdItems).toHaveLength(2); // Should have created 2 task buttons
 
-      taskButtons.deactivate();
+      _taskButtons.deactivate();
 
       // Check if dispose was called on each created status bar item mock
       createdItems.forEach((item) => {
@@ -388,13 +443,13 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
       // Get the command disposables tracked by the mock
       const commandDisposables = vscodeMock.commands.getCommandDisposables();
       // Should have registered commands for the two multi-tasks
       expect(commandDisposables).toHaveLength(2);
 
-      taskButtons.deactivate();
+      _taskButtons.deactivate();
 
       // Check if dispose was called on each command disposable
       commandDisposables.forEach((disposable) => {
@@ -410,13 +465,13 @@ describe('TaskButtons', () => {
         return undefined;
       });
 
-      const taskButtons = new TaskButtons(mockConfig);
+      const _taskButtons = new TaskButtons(mockConfig);
       // Get the created items - the first one should be the counter
       const createdItems = vscodeMock.window.getCreatedStatusBarItems();
       expect(createdItems.length).toBeGreaterThanOrEqual(1); // Should have counter + task button
       const counterItem = createdItems[0]; // Assuming counter is created first
 
-      taskButtons.deactivate();
+      _taskButtons.deactivate();
 
       // Check if dispose was called on the counter item
       expect(counterItem.dispose).toHaveBeenCalledTimes(1);

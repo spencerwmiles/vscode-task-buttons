@@ -7,6 +7,7 @@ export type Task = {
   tasks?: SubTask[]; // For multi-task buttons
   tooltip?: string;
   alignment?: 'left' | 'right';
+  color?: 'default' | 'error' | 'warning';
   // Internal state managed by the class
   _statusBarItem?: vscode.StatusBarItem;
   _commandDisposable?: vscode.Disposable;
@@ -154,6 +155,15 @@ class TaskButtons {
       statusBarItem.command = command;
       statusBarItem.text = command.title; // Use title from command
       statusBarItem.tooltip = command.tooltip;
+
+      // Apply color if specified
+      if (taskConfig.color === 'error') {
+        statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+        statusBarItem.color = new vscode.ThemeColor('statusBarItem.errorForeground');
+      } else if (taskConfig.color === 'warning') {
+        statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+        statusBarItem.color = new vscode.ThemeColor('statusBarItem.warningForeground');
+      }
 
       let commandDisposable: vscode.Disposable | undefined;
 

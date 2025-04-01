@@ -58,11 +58,35 @@ For each button you define the following object:
   "task": "The vscode task to execute. Must be absent when using 'tasks'",
   "tasks": "List of tasks to show in the Quick Pick Menu",
   "tooltip": "Optional tooltip to show when hovering over the button (defaults to task name)",
-  "description": "A description of the task when viewing the task list in the Quick Pick Menu"
+  "description": "A description of the task when viewing the task list in the Quick Pick Menu",
+  "color": "Optional color for the button. Options: default, error (red), warning (yellow). Default: default"
 }
 ```
 
 ### Customizing Button Appearance
+
+#### Colors
+
+You can set the color of task buttons to either `error` (red) or `warning` (yellow) to highlight important or cautionary tasks:
+
+```json
+{
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "$(alert) Deploy to Production",
+      "task": "deploy-prod",
+      "color": "error"
+    },
+    {
+      "label": "$(warning) Run Integration Tests",
+      "task": "test-integration",
+      "color": "warning"
+    }
+  ]
+}
+```
+
+Note: Due to VSCode's status bar design guidelines, only error (red) and warning (yellow) colors are supported.
 
 #### Icons
 
