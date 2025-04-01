@@ -2,7 +2,7 @@
   "branches": [
     "+([0-9])?(.{+([0-9]),x}).x",
     "production",
-    { "name": "main", "prerelease": "rc", "channel": "rc" }
+    { "name": "staging", "prerelease": "rc", "channel": "rc" }
   ],
   "plugins": [
     [

@@ -1,12 +1,24 @@
+## [1.2.3-rc.3](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.3-rc.2...v1.2.3-rc.3) (2025-03-29)
+
+### Housekeeping
+
+- removed section from readme ([2cf78b5](https://github.com/spencerwmiles/vscode-task-buttons/commit/2cf78b504966b09ebe7fec2561a6e90db496b080))
+
+## [1.2.3-rc.2](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.3-rc.1...v1.2.3-rc.2) (2025-03-29)
+
+### Bug Fixes
+
+- workaround for non semver versioning for extension marketplace ([ab54c1c](https://github.com/spencerwmiles/vscode-task-buttons/commit/ab54c1c9a6ee984cbbbf3ed12068217c12a28eb0))
+
+### Code Refactoring
+
+- streamline release workflows ([d67187d](https://github.com/spencerwmiles/vscode-task-buttons/commit/d67187d805c2d52d92d28ff73ab708dc10a64ea2))
+
 ## [1.2.3-rc.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.2.2...v1.2.3-rc.1) (2025-03-29)
 
 ### Housekeeping
 
 - Update release workflows and configuration for improved versioning and CI/CD process ([#116](https://github.com/spencerwmiles/vscode-task-buttons/issues/116)) ([b5f0a90](https://github.com/spencerwmiles/vscode-task-buttons/commit/b5f0a909c3ba8eee3219417f226a47a3ab3a767d))
-
-# Change Log
-
-All notable changes to the "vscode-task-buttons" extension will be documented in this file.
 
 ### 1.1.3
 
