@@ -18,7 +18,6 @@ const mockDisposable = {
 };
 
 // Define an interface for the mock StatusBarItem
-// Use the inferred type from vi.fn() instead of explicit Mock<>
 interface MockStatusBarItem {
   show: ReturnType<typeof vi.fn>;
   hide: ReturnType<typeof vi.fn>;
@@ -31,10 +30,17 @@ interface MockStatusBarItem {
     | undefined;
   alignment: number | undefined;
   priority: number | undefined;
+  backgroundColor?: ThemeColor;
+  color?: ThemeColor;
 }
 
 // Keep track of created status bar items within a test run
 let createdStatusBarItems: MockStatusBarItem[] = [];
+
+// Add ThemeColor class
+export class ThemeColor {
+  constructor(public id: string) {}
+}
 
 // Mock implementation for StatusBarItem
 const createMockStatusBarItem = (alignment: number, priority?: number): MockStatusBarItem => ({
@@ -46,6 +52,8 @@ const createMockStatusBarItem = (alignment: number, priority?: number): MockStat
   command: undefined,
   alignment,
   priority,
+  backgroundColor: undefined,
+  color: undefined,
 });
 
 // Mock implementation for window API

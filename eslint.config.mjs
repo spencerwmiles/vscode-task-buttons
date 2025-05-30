@@ -1,11 +1,17 @@
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
-import prettier from 'eslint-plugin-prettier';
 
 export default [
   {
-    ignores: ['out/**', 'dist/**', '**/*.d.ts', 'node_modules/**', '.vscode-test/**'],
+    ignores: [
+      'out/**',
+      'dist/**',
+      '**/*.d.ts',
+      'node_modules/**',
+      '.vscode-test/**',
+      'coverage/**',
+    ],
   },
   prettierConfig,
   {
@@ -20,7 +26,6 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      prettier: prettier,
     },
     rules: {
       // TypeScript specific rules
@@ -59,7 +64,6 @@ export default [
 
       // General JavaScript/TypeScript rules
       'no-console': ['error', { allow: ['warn', 'error'] }],
-      'prettier/prettier': 'error',
       eqeqeq: ['error', 'always'],
       'no-unused-expressions': 'error',
       'no-duplicate-imports': 'error',
