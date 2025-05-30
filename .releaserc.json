@@ -1,7 +1,7 @@
 {
   "branches": [
     "+([0-9])?(.{+([0-9]),x}).x",
-    "production",
+    { "name": "production", "channel": false, "prerelease": false },
     { "name": "staging", "prerelease": "rc", "channel": "rc" }
   ],
   "plugins": [
