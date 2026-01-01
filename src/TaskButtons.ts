@@ -179,7 +179,8 @@ class TaskButtons {
             }));
 
             const selected = await vscode.window.showQuickPick(quickPickItems, {
-              placeHolder: `Select a task for '${command.title}'`,
+              // Replace to strip out icons which may be present in the title (e.g. $(play) Run)
+              placeHolder: `Select a task for '${command.title.replace(/\$\([^\)]+\)/g, '').trim()}'`,
             });
 
             if (selected?.taskName) {
