@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.2...v1.3.3) (2026-01-01)
+
+### Bug Fixes
+
+- removed steps for handling rc in naming convention ([5919c68](https://github.com/spencerwmiles/vscode-task-buttons/commit/5919c6871fe74d6d976db0f2f5714ea839b19f4b))
+
 ## [1.3.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.0...v1.3.1) (2025-05-30)
 
 ### Housekeeping
