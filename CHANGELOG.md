@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.1...v1.3.2) (2026-01-01)
+
+### Housekeeping
+
+- removed pre-release versioning on staging ([84558c2](https://github.com/spencerwmiles/vscode-task-buttons/commit/84558c2f74d69ab30271daf1887f6751b419fb2a))
+
 ## [1.3.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.0...v1.3.1) (2025-05-30)
 
 ### Housekeeping
