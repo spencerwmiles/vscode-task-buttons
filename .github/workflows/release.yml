@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm semantic-release
 
-      # Read the full pre-release version (e.g., 1.2.3-rc.1) from the locally modified package.json
+      # Read the full version (e.g., 1.2.3) from the locally modified package.json
       - name: Read Full Version from package.json
         id: read_full_version
         # Only proceed if semantic-release indicates a release was prepared
@@ -91,6 +91,11 @@ jobs:
           add-paths: | # Explicitly add only these files from the workspace
             package.json
             CHANGELOG.md
+
+      # Update package.json in the runner FS to the base version for packaging/publishing
+      - name: Set package.json to Base Version (for Marketplace)
+        if: steps.read_full_version.outputs.version != ''
+        run: pnpm version ${{ steps.read_full_version.outputs.version }} --no-git-tag-version
 
       # Package the extension using the full version in package.json
       - name: Package Extension
