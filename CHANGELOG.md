@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.4.0...v1.4.1) (2026-01-18)
+
+### Housekeeping
+
+- **release:** Update package.json and CHANGELOG.md for pre-release 1.4.0 ([e67a15e](https://github.com/spencerwmiles/vscode-task-buttons/commit/e67a15e809aba83d8cb28304746a5f82691aa1e9))
+
 ## [1.4.0](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.1...v1.4.0) (2026-01-01)
 
 ### Features
