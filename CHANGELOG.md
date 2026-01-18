@@ -1,3 +1,21 @@
+## [1.4.0](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.1...v1.4.0) (2026-01-01)
+
+### Features
+
+- strip out icons from menu title ([8bf7ca6](https://github.com/spencerwmiles/vscode-task-buttons/commit/8bf7ca6fed498e7b0fd3577ed49059ea54b4b42d))
+
+### Bug Fixes
+
+- removed steps for handling rc in naming convention ([5919c68](https://github.com/spencerwmiles/vscode-task-buttons/commit/5919c6871fe74d6d976db0f2f5714ea839b19f4b))
+
+### Housekeeping
+
+- added back set of version ([a642ca3](https://github.com/spencerwmiles/vscode-task-buttons/commit/a642ca32e622bb0d98dc4c95551b9314f56ee0be))
+- added set of version for production builds ([af17842](https://github.com/spencerwmiles/vscode-task-buttons/commit/af178427d7541061228a0ed406c29e9a2167befb))
+- removed pre-release versioning on staging ([84558c2](https://github.com/spencerwmiles/vscode-task-buttons/commit/84558c2f74d69ab30271daf1887f6751b419fb2a))
+- testing ([8b71b41](https://github.com/spencerwmiles/vscode-task-buttons/commit/8b71b41506695420f379bf1ada849a615cee4fda))
+- testing ci/cd ([5284a0a](https://github.com/spencerwmiles/vscode-task-buttons/commit/5284a0a740d9f06fca892f5f9769f5cafae14741))
+
 ## [1.3.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.3.0...v1.3.1) (2025-05-30)
 
 ### Housekeeping

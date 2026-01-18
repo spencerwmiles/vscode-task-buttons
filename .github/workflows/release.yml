@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm semantic-release
 
-      # Read the full pre-release version (e.g., 1.2.3-rc.1) from the locally modified package.json
+      # Read the full version (e.g., 1.2.3) from the locally modified package.json
       - name: Read Full Version from package.json
         id: read_full_version
         # Only proceed if semantic-release indicates a release was prepared
@@ -92,26 +92,14 @@ jobs:
             package.json
             CHANGELOG.md
 
-      # === Steps for Marketplace Publication (using base version) ===
-
-      # Calculate the base version (e.g., 1.2.3) by stripping the suffix
-      - name: Calculate Base Version
-        id: get_base_version
-        if: steps.read_full_version.outputs.version != ''
-        run: |
-          full_version="${{ steps.read_full_version.outputs.version }}"
-          base_version="${full_version%%-*}" # Remove shortest suffix starting with '-'
-          echo "base_version=$base_version" >> $GITHUB_OUTPUT
-          echo "Calculated base version: $base_version from $full_version"
-
       # Update package.json in the runner FS to the base version for packaging/publishing
       - name: Set package.json to Base Version (for Marketplace)
-        if: steps.get_base_version.outputs.base_version != ''
-        run: pnpm version ${{ steps.get_base_version.outputs.base_version }} --no-git-tag-version
+        if: steps.read_full_version.outputs.version != ''
+        run: pnpm version ${{ steps.read_full_version.outputs.version }} --no-git-tag-version
 
-      # Package the extension using the base version in package.json
+      # Package the extension using the full version in package.json
       - name: Package Extension
-        if: steps.get_base_version.outputs.base_version != ''
+        if: steps.read_full_version.outputs.version != ''
         run: pnpm package
 
       # Upload the VSIX asset to the GitHub release created by semantic-release
@@ -129,7 +117,7 @@ jobs:
 
       # Publish to marketplace last, using the base version but marking as pre-release
       - name: Publish RC Pre-release to Visual Studio Marketplace
-        if: steps.get_base_version.outputs.base_version != ''
+        if: steps.read_full_version.outputs.version != ''
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VSCE_PAT }}

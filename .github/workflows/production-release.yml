@@ -90,7 +90,10 @@ jobs:
             package.json
             CHANGELOG.md
 
-      # === Steps for Packaging and Publication ===
+      # Update package.json in the runner FS to the base version for packaging/publishing
+      - name: Set package.json to Base Version (for Marketplace)
+        if: steps.read_full_version.outputs.version != ''
+        run: pnpm version ${{ steps.read_full_version.outputs.version }} --no-git-tag-version
 
       # Package the extension using the version determined by semantic-release
       - name: Package Extension
