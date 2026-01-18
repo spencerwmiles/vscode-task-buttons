@@ -1,3 +1,13 @@
+## [1.4.2](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.4.1...v1.4.2) (2026-01-18)
+
+### Housekeeping
+
+- **deps-dev:** bump the dev-deps group with 21 updates ([b3a6d90](https://github.com/spencerwmiles/vscode-task-buttons/commit/b3a6d90e0ef5602ab7cda443905e8bae507513e3))
+- **package.json:** bumped vscode engine version to 1.107.0 ([8fd4548](https://github.com/spencerwmiles/vscode-task-buttons/commit/8fd4548e20f728edb5f81d0a2387a3296251d362))
+- **release:** Update package.json and CHANGELOG.md for release 1.4.1 ([799f3f2](https://github.com/spencerwmiles/vscode-task-buttons/commit/799f3f2d1f2b9d39e292ccde0f2b4a106aa5b5f9))
+- removed staging/pre-release ci/cd to simplify versioning and releases ([b07c18a](https://github.com/spencerwmiles/vscode-task-buttons/commit/b07c18acb89ecc0bc2cf0ea8aca433dd77400840))
+- updated vitest configuration for 4.x and updated task buttons mock ([18042c5](https://github.com/spencerwmiles/vscode-task-buttons/commit/18042c5587e2e7357ea2dd9353faf84c664983d2))
+
 ## [1.4.1](https://github.com/spencerwmiles/vscode-task-buttons/compare/v1.4.0...v1.4.1) (2026-01-18)
 
 ### Housekeeping
