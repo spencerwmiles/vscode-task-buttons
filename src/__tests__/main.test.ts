@@ -12,10 +12,13 @@ const mockTaskButtonsInstance = {
   _refreshUI: vi.fn(), // Add other methods if needed by main.ts indirectly
 };
 vi.mock('../TaskButtons', () => {
-  // Default export needs to be handled like this
+  // Must use regular function (not arrow) - it's used as a constructor with `new`
+  const MockTaskButtons = vi.fn(function () { // eslint-disable-line prefer-arrow-callback
+    return mockTaskButtonsInstance;
+  });
   return {
-    default: vi.fn().mockImplementation(() => mockTaskButtonsInstance),
-    CONFIGURATION_SECTION: 'taskButtons', // Ensure the constant is exported
+    default: MockTaskButtons,
+    CONFIGURATION_SECTION: 'VsCodeTaskButtons', // Match actual export value
   };
 });
 
